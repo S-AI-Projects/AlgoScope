@@ -1,4 +1,4 @@
-import { createStep } from '../../lib/utils'
+import { createStep } from '../../lib/utils.js'
 
 export const mergeSortSources = {
   javascript: {
@@ -290,6 +290,9 @@ export function resolveMergeSortLine(language, lineKey) {
 }
 
 export function generateMergeSortSteps(inputArray) {
+  if (!Array.isArray(inputArray)) {
+    throw new TypeError('inputArray must be an array')
+  }
   const arr = [...inputArray]
   const steps = []
   const n = arr.length
@@ -548,7 +551,9 @@ export function generateMergeSortSteps(inputArray) {
     })
   )
 
-  performMergeSort(0, n - 1)
+  if (n > 0) {
+    performMergeSort(0, n - 1)
+  }
 
   steps.push(
     createStep({
@@ -565,4 +570,42 @@ export function generateMergeSortSteps(inputArray) {
   )
 
   return steps
+}
+
+/**
+ * Pure Merge Sort implementation returning a new sorted array in ascending order.
+ * Preserves stability on ties and does not mutate the caller's array.
+ *
+ * @param {Array<number>} inputArray - The array of numbers to sort.
+ * @returns {Array<number>} A new sorted array in ascending order.
+ */
+export function mergeSort(inputArray) {
+  if (!Array.isArray(inputArray)) {
+    throw new TypeError('inputArray must be an array')
+  }
+
+  const arr = [...inputArray]
+  if (arr.length <= 1) {
+    return arr
+  }
+
+  const m = Math.floor(arr.length / 2)
+  const left = mergeSort(arr.slice(0, m))
+  const right = mergeSort(arr.slice(m))
+
+  const merged = []
+  let i = 0
+  let j = 0
+  while (i < left.length && j < right.length) {
+    // Stable tie-breaking: <= ensures left duplicate precedes right duplicate
+    if (left[i] <= right[j]) {
+      merged.push(left[i++])
+    } else {
+      merged.push(right[j++])
+    }
+  }
+  while (i < left.length) merged.push(left[i++])
+  while (j < right.length) merged.push(right[j++])
+
+  return merged
 }
