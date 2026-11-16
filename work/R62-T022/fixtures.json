@@ -1,0 +1,64 @@
+{
+  "task": "R62-T022",
+  "name": "Merge Sort Boundary Cases and Contract Regression",
+  "item": "src/algorithms/sorting/mergeSortSteps.js",
+  "fixtures": [
+    {
+      "description": "Primary fixture: unsorted array [3, 1, 2]",
+      "input": [3, 1, 2],
+      "expectedAscending": [1, 2, 3],
+      "actualAscending": [1, 2, 3],
+      "status": "PASS"
+    },
+    {
+      "description": "Tie fixture: array with duplicate values [2, 2, 1]",
+      "input": [2, 2, 1],
+      "expectedAscending": [1, 2, 2],
+      "actualAscending": [1, 2, 2],
+      "tieBehavior": "Stable (left duplicate precedes right duplicate via <= comparison)",
+      "status": "PASS"
+    },
+    {
+      "description": "Already ordered array [1, 2, 3]",
+      "input": [1, 2, 3],
+      "expectedAscending": [1, 2, 3],
+      "actualAscending": [1, 2, 3],
+      "status": "PASS"
+    },
+    {
+      "description": "Reversed array [3, 2, 1]",
+      "input": [3, 2, 1],
+      "expectedAscending": [1, 2, 3],
+      "actualAscending": [1, 2, 3],
+      "status": "PASS"
+    },
+    {
+      "description": "Smallest supported collection: single element [42]",
+      "input": [42],
+      "expectedAscending": [42],
+      "actualAscending": [42],
+      "status": "PASS"
+    },
+    {
+      "description": "Smallest supported collection: empty collection []",
+      "input": [],
+      "expectedAscending": [],
+      "actualAscending": [],
+      "stepCount": 2,
+      "status": "PASS"
+    }
+  ],
+  "sourceSnippetExecution": {
+    "language": "javascript",
+    "vmExecution": "isolated Node.js vm",
+    "verifiedFixtures": [
+      { "input": [3, 1, 2], "output": [1, 2, 3] },
+      { "input": [2, 2, 1], "output": [1, 2, 2] },
+      { "input": [1, 2, 3], "output": [1, 2, 3] },
+      { "input": [3, 2, 1], "output": [1, 2, 3] },
+      { "input": [42], "output": [42] },
+      { "input": [], "output": [] }
+    ],
+    "status": "PASS"
+  }
+}
