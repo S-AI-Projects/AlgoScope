@@ -1,0 +1,52 @@
+{
+  "task": "R62-T023",
+  "name": "Euclid GCD Steps and Independent Reference Comparison",
+  "item": "src/algorithms/course/euclid-gcd-steps.js",
+  "primaryFixture": {
+    "a": 54,
+    "b": 24,
+    "expectedRemainders": [6, 0],
+    "actualRemainders": [6, 0],
+    "expectedQuotients": [2, 4],
+    "actualQuotients": [2, 4],
+    "expectedGCD": 6,
+    "actualGCD": 6,
+    "handCalculatedSteps": [
+      { "round": 1, "formula": "54 = 2 * 24 + 6", "remainder": 6 },
+      { "round": 2, "formula": "24 = 4 * 6 + 0", "remainder": 0 }
+    ],
+    "status": "PASS"
+  },
+  "zeroInputPolicy": {
+    "policyDescription": "gcd(a, 0) = |a|, gcd(0, b) = |b|, gcd(0, 0) = 0",
+    "verifiedCases": [
+      { "a": 54, "b": 0, "expected": 54, "actual": 54, "status": "PASS" },
+      { "a": 0, "b": 24, "expected": 24, "actual": 24, "status": "PASS" },
+      { "a": 0, "b": 0, "expected": 0, "actual": 0, "status": "PASS" },
+      { "a": -54, "b": 0, "expected": 54, "actual": 54, "status": "PASS" },
+      { "a": 0, "b": -24, "expected": 24, "actual": 24, "status": "PASS" }
+    ]
+  },
+  "independentReferenceComparison": {
+    "referenceMethods": ["Brute-Force Common Divisor Search", "Naive Subtraction Euclidean GCD"],
+    "verifiedPairs": [
+      { "pair": [54, 24], "gcd": 6, "status": "PASS" },
+      { "pair": [48, 18], "gcd": 6, "status": "PASS" },
+      { "pair": [100, 25], "gcd": 25, "status": "PASS" },
+      { "pair": [35, 64], "gcd": 1, "status": "PASS" },
+      { "pair": [17, 19], "gcd": 1, "status": "PASS" },
+      { "pair": [1, 1], "gcd": 1, "status": "PASS" },
+      { "pair": [270, 192], "gcd": 6, "status": "PASS" },
+      { "pair": [1071, 462], "gcd": 21, "status": "PASS" },
+      { "pair": [123456, 7890], "gcd": 6, "status": "PASS" }
+    ]
+  },
+  "sourceSnippetExecution": {
+    "language": "javascript",
+    "vmExecution": "isolated Node.js vm",
+    "input": { "a": 54, "b": 24 },
+    "expectedOutput": 6,
+    "actualOutput": 6,
+    "status": "PASS"
+  }
+}
