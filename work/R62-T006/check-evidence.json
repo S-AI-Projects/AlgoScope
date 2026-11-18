@@ -1,0 +1,98 @@
+{
+  "task": "R62-T006",
+  "generatedAt": "2026-11-18T17:50:37.540Z",
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "4.1.7",
+    "vite": "7.1.11"
+  },
+  "checks": {
+    "focusedVitest": {
+      "command": "npm test -- src/algorithms/course/r62-t006.test.js",
+      "exitCode": 0,
+      "result": "4 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "built successfully (chunk size warning)"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  },
+  "cases": [
+    {
+      "name": "target found",
+      "input": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "target": 30,
+      "expected": {
+        "index": 2
+      },
+      "actual": {
+        "index": 2,
+        "terminalState": "found",
+        "foundIndex": 2
+      },
+      "passed": true
+    },
+    {
+      "name": "all equal target absent",
+      "input": [
+        7,
+        7,
+        7
+      ],
+      "target": 9,
+      "expected": {
+        "index": -1
+      },
+      "actual": {
+        "index": -1,
+        "terminalState": "not-found",
+        "foundIndex": null
+      },
+      "passed": true
+    },
+    {
+      "name": "all equal target present",
+      "input": [
+        7,
+        7,
+        7
+      ],
+      "target": 7,
+      "expected": {
+        "index": 0
+      },
+      "actual": {
+        "index": 0,
+        "terminalState": "found",
+        "foundIndex": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "empty array",
+      "input": [],
+      "target": 1,
+      "expected": {
+        "index": -1
+      },
+      "actual": {
+        "index": -1,
+        "terminalState": "not-found",
+        "foundIndex": null
+      },
+      "passed": true
+    }
+  ]
+}
