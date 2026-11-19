@@ -1,0 +1,22 @@
+{
+  "taskId": "R62-T028",
+  "item": "src/algorithms/searching/graphSearchSources.js",
+  "selectedEntry": "bfs",
+  "selectedLanguage": "javascript",
+  "displayedExample": {
+    "startNode": 1,
+    "expectedOutput": [1, 2, 5, 6, 3, 7, 4, 9, 8],
+    "type": "displayed-example"
+  },
+  "independentlyComputedInput": {
+    "startNode": 8,
+    "expectedOutput": [8, 7, 9, 2, 5, 1, 3, 4, 6],
+    "type": "independent-input"
+  },
+  "unsupportedInput": {
+    "startNode": 999,
+    "expectedOutput": [999],
+    "behavior": "isolated-halt",
+    "explanation": "Node 999 does not exist in the hardcoded graph adjacency list. BFS logs [999] and halts without discovering or traversing legitimate graph vertices."
+  }
+}
