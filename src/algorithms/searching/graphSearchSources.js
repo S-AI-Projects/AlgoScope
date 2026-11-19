@@ -1,5 +1,52 @@
+/**
+ * Displayed source-code collection for Graph Search algorithms.
+ * Note: This module exports displayed code strings for syntax display,
+ * not an executable step-generator API.
+ */
+
+/**
+ * Metadata and failure-path documentation for graph search displayed sources.
+ */
+export const GRAPH_SEARCH_METADATA = {
+  firstAlgorithm: 'bfs',
+  primaryLanguage: 'javascript',
+  entry: 'bfs',
+  language: 'javascript',
+  displayedExample: {
+    startNode: 1,
+    expectedOutput: [1, 2, 5, 6, 3, 7, 4, 9, 8],
+    description: 'Breadth-First Search traversal starting from node 1 on the embedded 9-node graph.',
+  },
+  independentlyComputedExample: {
+    startNode: 8,
+    expectedOutput: [8, 7, 9, 2, 5, 1, 3, 4, 6],
+    description: 'Breadth-First Search traversal starting from node 8 on the embedded 9-node graph.',
+  },
+  unsupportedInputs: [
+    {
+      input: 999,
+      category: 'Non-existent node',
+      behavior: 'isolated-halt',
+      description:
+        'Node 999 does not exist in the hardcoded graph. The snippet processes 999 and immediately halts without visiting valid graph nodes.',
+    },
+    {
+      input: null,
+      category: 'Invalid null input',
+      behavior: 'spurious-visit',
+      description:
+        'Null input is accepted by Set/Array without validation and logged as null, producing an invalid traversal sequence.',
+    },
+  ],
+}
+
 export const graphSearchSources = {
   bfs: {
+    metadata: {
+      algorithm: 'bfs',
+      supportedInputs: 'Integer node ID present in graph (1..9)',
+      unsupportedInputs: [999, null, undefined],
+    },
     javascript: {
       code: `// Graph represented as an adjacency list
 const graph = {
@@ -25,6 +72,18 @@ function bfs(startNode) {
     }
   }
 }`,
+      lineMap: {
+        graphDef: 2,
+        function: 11,
+        visitedSet: 12,
+        queueInit: 13,
+        whileLoop: 16,
+        dequeue: 17,
+        process: 18,
+        neighborLoop: 20,
+        visitedCheck: 21,
+        enqueue: 23,
+      },
     },
     python: {
       code: `from collections import deque
@@ -49,6 +108,19 @@ def bfs(start_node):
             if neighbor not in visited:
                 visited.add(neighbor)
                 queue.append(neighbor)`,
+      lineMap: {
+        imports: 1,
+        graphDef: 4,
+        function: 10,
+        visitedSet: 11,
+        queueInit: 12,
+        whileLoop: 15,
+        dequeue: 16,
+        process: 17,
+        neighborLoop: 19,
+        visitedCheck: 20,
+        enqueue: 22,
+      },
     },
     cpp: {
       code: `#include <iostream>
@@ -192,6 +264,11 @@ fn bfs(graph: &HashMap<i32, Vec<i32>>, start_node: i32) {
     },
   },
   dfs: {
+    metadata: {
+      algorithm: 'dfs',
+      supportedInputs: 'Integer node ID present in graph (1..9)',
+      unsupportedInputs: [999, null, undefined],
+    },
     javascript: {
       code: `const graph = {
   1: [2, 5, 6], 2: [1, 3, 7], 3: [2, 4, 6],
@@ -213,6 +290,18 @@ function dfs(startNode) {
     }
     traverse(startNode);
 }`,
+      lineMap: {
+        graphDef: 1,
+        function: 8,
+        visitedSet: 9,
+        traverseDef: 11,
+        visitedCheck: 12,
+        markVisited: 13,
+        process: 14,
+        neighborLoop: 16,
+        recursiveCall: 17,
+        invoke: 20,
+      },
     },
     python: {
       code: `graph = {
@@ -234,6 +323,18 @@ def dfs(start_node):
             traverse(neighbor)
     
     traverse(start_node)`,
+      lineMap: {
+        graphDef: 1,
+        function: 8,
+        visitedSet: 9,
+        traverseDef: 11,
+        visitedCheck: 12,
+        markVisited: 14,
+        process: 15,
+        neighborLoop: 17,
+        recursiveCall: 18,
+        invoke: 20,
+      },
     },
     cpp: {
       code: `#include <iostream>
