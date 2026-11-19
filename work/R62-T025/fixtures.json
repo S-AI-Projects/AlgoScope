@@ -1,0 +1,13 @@
+{
+  "taskId": "R62-T025",
+  "item": "src/algorithms/course/lru-cache.js",
+  "capacity": 2,
+  "requiredSequence": [
+    { "op": "put", "key": "A", "value": 1, "expectedEvicted": null, "expectedSize": 1, "expectedRecency": ["A"] },
+    { "op": "put", "key": "B", "value": 2, "expectedEvicted": null, "expectedSize": 2, "expectedRecency": ["A", "B"] },
+    { "op": "get", "key": "A", "expectedResult": 1, "expectedSize": 2, "expectedRecency": ["B", "A"] },
+    { "op": "put", "key": "C", "value": 3, "expectedEvicted": "B", "expectedSize": 2, "expectedRecency": ["A", "C"] }
+  ],
+  "missSentinel": -1,
+  "deterministicSeedExample": 12345
+}
