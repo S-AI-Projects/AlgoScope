@@ -1,0 +1,37 @@
+{
+  "taskId": "R62-T029",
+  "item": "src/algorithms/course/sieve-of-eratosthenes.js",
+  "contract": {
+    "zeroAndOneNotPrime": true,
+    "primesUpTo12": [2, 3, 5, 7, 11]
+  },
+  "complexityExperiment": {
+    "metric": "Machine-independent algorithmic operation count (outer checks + composite strikes)",
+    "avoidHardwareSpeedThreshold": true,
+    "sizes": [
+      {
+        "n": 12,
+        "primes": [2, 3, 5, 7, 11],
+        "primesCount": 5,
+        "outerChecks": 2,
+        "compositeStrikes": 7,
+        "totalOperations": 9
+      },
+      {
+        "n": 30,
+        "primes": [2, 3, 5, 7, 11, 13, 17, 19, 23, 29],
+        "primesCount": 10,
+        "outerChecks": 4,
+        "compositeStrikes": 21,
+        "totalOperations": 25
+      },
+      {
+        "n": 100,
+        "primesCount": 25,
+        "outerChecks": 9,
+        "compositeStrikes": 102,
+        "totalOperations": 111
+      }
+    ]
+  }
+}
