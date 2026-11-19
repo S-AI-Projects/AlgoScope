@@ -1,0 +1,28 @@
+{
+  "taskId": "R62-T026",
+  "item": "src/algorithms/monotonicStack/maximalRectangleSteps.js",
+  "operationsSequence": {
+    "push": ["A", "B", "C"],
+    "popTwice": ["C", "B"],
+    "pushNext": ["D"],
+    "drain": ["D", "A"],
+    "expectedTotalPopOrder": ["C", "B", "D", "A"]
+  },
+  "histogramMapping": {
+    "heights": [2, 4, 6, 3],
+    "labels": {
+      "0": "A",
+      "1": "B",
+      "2": "C",
+      "3": "D"
+    },
+    "expectedPopOrder": ["C", "B", "D", "A"]
+  },
+  "emptyState": {
+    "emptyMatrixArea": 0,
+    "nullMatrixArea": 0,
+    "emptyStackPop": null,
+    "emptyStackPeek": null,
+    "emptyStackDrain": []
+  }
+}

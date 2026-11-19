@@ -1,4 +1,186 @@
-import { createStep } from '../../lib/utils'
+import { createStep } from '../../lib/utils.js'
+
+/**
+ * Constant representing the area result for empty matrices or invalid inputs.
+ */
+export const EMPTY_STATE_AREA = 0
+
+/**
+ * Monotonic Stack data structure separating pure stack operations from UI state.
+ */
+export class MonotonicStack {
+  constructor() {
+    this._items = []
+  }
+
+  get size() {
+    return this._items.length
+  }
+
+  isEmpty() {
+    return this._items.length === 0
+  }
+
+  /**
+   * Pushes an item onto the stack.
+   * @param {*} item
+   */
+  push(item) {
+    this._items.push(item)
+  }
+
+  /**
+   * Removes and returns the top item.
+   * Documented empty-state behavior: returns undefined when empty without throwing.
+   * @returns {* | undefined}
+   */
+  pop() {
+    return this._items.pop()
+  }
+
+  /**
+   * Inspects the top item without removing it.
+   * Documented empty-state behavior: returns undefined when empty.
+   * @returns {* | undefined}
+   */
+  peek() {
+    if (this._items.length === 0) return undefined
+    return this._items[this._items.length - 1]
+  }
+
+  /**
+   * Drains all remaining items from the stack in LIFO (pop) order.
+   * Documented empty-state behavior: returns empty array if already empty.
+   * @returns {Array<*>} Popped items in order of removal.
+   */
+  drain() {
+    const drained = []
+    while (!this.isEmpty()) {
+      drained.push(this.pop())
+    }
+    return drained
+  }
+
+  /**
+   * Returns a copy of the underlying items.
+   * @returns {Array<*>}
+   */
+  toArray() {
+    return [...this._items]
+  }
+
+  clear() {
+    this._items = []
+  }
+}
+
+/**
+ * Pure algorithm: Computes largest rectangle area in a histogram.
+ * @param {number[]} heights
+ * @returns {number} Maximum rectangular area.
+ */
+export function largestRectangleInHistogram(heights) {
+  if (!Array.isArray(heights) || heights.length === 0) {
+    return EMPTY_STATE_AREA
+  }
+
+  const stack = new MonotonicStack()
+  let maxArea = 0
+  const n = heights.length
+
+  for (let i = 0; i <= n; i++) {
+    const currentHeight = i === n ? 0 : heights[i]
+    while (!stack.isEmpty() && (i === n || currentHeight < heights[stack.peek()])) {
+      const topIdx = stack.pop()
+      const h = heights[topIdx]
+      const w = stack.isEmpty() ? i : i - stack.peek() - 1
+      const area = h * w
+      if (area > maxArea) {
+        maxArea = area
+      }
+    }
+    if (i < n) {
+      stack.push(i)
+    }
+  }
+
+  return maxArea
+}
+
+/**
+ * Pure algorithm: Computes the maximal rectangle containing only '1's in a binary matrix.
+ * Separated from display and animation state.
+ * Documented empty-state behavior: returns 0 for null, undefined, empty matrix, or empty rows.
+ *
+ * @param {Array<Array<string | number>>} matrix
+ * @returns {number} Maximum rectangle area.
+ */
+export function maximalRectangle(matrix) {
+  if (!Array.isArray(matrix) || matrix.length === 0) {
+    return EMPTY_STATE_AREA
+  }
+  if (!Array.isArray(matrix[0]) || matrix[0].length === 0) {
+    return EMPTY_STATE_AREA
+  }
+
+  const cols = matrix[0].length
+  const heights = new Array(cols).fill(0)
+  let maxArea = 0
+
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < cols; col++) {
+      heights[col] = String(matrix[row][col]) === '1' ? heights[col] + 1 : 0
+    }
+    const rowMax = largestRectangleInHistogram(heights)
+    if (rowMax > maxArea) {
+      maxArea = rowMax
+    }
+  }
+
+  return maxArea
+}
+
+/**
+ * Validates invariant properties of a maximal rectangle step.
+ * Checks that stack elements correspond to monotonically non-decreasing heights.
+ *
+ * @param {object} step
+ * @param {Array<Array<string>>} [matrix]
+ * @returns {boolean} True if invariant holds.
+ */
+export function validateMaximalRectangleStep(step, matrix = null) {
+  if (!step || typeof step !== 'object') {
+    throw new Error('Step must be a valid object')
+  }
+
+  const { stack, array: heights, variables } = step
+  if (Array.isArray(stack) && Array.isArray(heights)) {
+    // Monotonic stack invariant: heights at stack indices must be non-decreasing
+    for (let i = 1; i < stack.length; i++) {
+      const prevIdx = stack[i - 1]
+      const currIdx = stack[i]
+      if (heights[prevIdx] > heights[currIdx]) {
+        throw new Error(
+          `Monotonic stack invariant violated at indices ${prevIdx} and ${currIdx}: ${heights[prevIdx]} > ${heights[currIdx]}`
+        )
+      }
+    }
+  }
+
+  if (variables && typeof variables.maxArea === 'number') {
+    if (variables.maxArea < 0) {
+      throw new Error(`Negative maxArea: ${variables.maxArea}`)
+    }
+  }
+
+  if (matrix && step.currentRow >= 0 && step.currentRow < matrix.length) {
+    if (!Array.isArray(matrix[step.currentRow])) {
+      throw new Error('Invalid matrix row')
+    }
+  }
+
+  return true
+}
 
 export const maximalRectangleSources = {
   javascript: {
@@ -281,9 +463,17 @@ export function resolveMaximalRectangleLine(language, lineKey) {
   )
 }
 
+/**
+ * Step generator preserving the exact public interface and recording immutable snapshots.
+ * Documented empty-state behavior: returns [] when matrix is empty or invalid.
+ *
+ * @param {Array<Array<string | number>>} matrixInput
+ * @returns {Array<object>}
+ */
 export function generateMaximalRectangleSteps(matrixInput) {
   const steps = []
-  if (!matrixInput || matrixInput.length === 0) return steps
+  if (!Array.isArray(matrixInput) || matrixInput.length === 0) return steps
+  if (!Array.isArray(matrixInput[0]) || matrixInput[0].length === 0) return steps
 
   const matrix = matrixInput.map((row) => row.map((val) => String(val)))
   const rows = matrix.length
@@ -295,10 +485,11 @@ export function generateMaximalRectangleSteps(matrixInput) {
     createStep({
       lineKey: 'setup',
       type: 'start',
-      matrix,
+      matrix: matrix.map((r) => [...r]),
       currentRow: -1,
       array: [...heights],
       stack: [],
+      indices: [],
       message: 'Starting Maximal Rectangle. Initializing empty heights array.',
       variables: { rows, cols, maxArea },
       duration: 800,
@@ -314,10 +505,11 @@ export function generateMaximalRectangleSteps(matrixInput) {
       createStep({
         lineKey: 'updateHeights',
         type: 'active',
-        matrix,
+        matrix: matrix.map((r) => [...r]),
         currentRow: row,
         array: [...heights],
         stack: [],
+        indices: [],
         message: `Row ${row}: Updated heights array. Cells with '0' reset height to 0.`,
         variables: { row, maxArea },
         duration: 1000,
@@ -333,7 +525,7 @@ export function generateMaximalRectangleSteps(matrixInput) {
         createStep({
           lineKey: 'stackLoop',
           type: 'outer-loop',
-          matrix,
+          matrix: matrix.map((r) => [...r]),
           currentRow: row,
           array: [...heights],
           stack: [...stack],
@@ -355,7 +547,7 @@ export function generateMaximalRectangleSteps(matrixInput) {
           createStep({
             lineKey: 'whileLoop',
             type: 'compare',
-            matrix,
+            matrix: matrix.map((r) => [...r]),
             currentRow: row,
             array: [...heights],
             stack: [...stack],
@@ -375,7 +567,7 @@ export function generateMaximalRectangleSteps(matrixInput) {
           createStep({
             lineKey: 'popAndCalc',
             type: 'calculate',
-            matrix,
+            matrix: matrix.map((r) => [...r]),
             currentRow: row,
             array: [...heights],
             stack: [...stack],
@@ -392,10 +584,11 @@ export function generateMaximalRectangleSteps(matrixInput) {
             createStep({
               lineKey: 'updateMax',
               type: 'update',
-              matrix,
+              matrix: matrix.map((r) => [...r]),
               currentRow: row,
               array: [...heights],
               stack: [...stack],
+              indices: [],
               message: `New Max Area found: ${maxArea}!`,
               variables: { row, maxArea },
               duration: 800,
@@ -410,7 +603,7 @@ export function generateMaximalRectangleSteps(matrixInput) {
           createStep({
             lineKey: 'push',
             type: 'push',
-            matrix,
+            matrix: matrix.map((r) => [...r]),
             currentRow: row,
             array: [...heights],
             stack: [...stack],
@@ -428,10 +621,11 @@ export function generateMaximalRectangleSteps(matrixInput) {
     createStep({
       lineKey: 'complete',
       type: 'complete',
-      matrix,
+      matrix: matrix.map((r) => [...r]),
       currentRow: -1,
       array: [...heights],
       stack: [],
+      indices: [],
       message: `Finished! Maximal Rectangle Area is ${maxArea}.`,
       variables: { maxArea },
       duration: 900,
