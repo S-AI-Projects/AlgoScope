@@ -1,0 +1,66 @@
+{
+  "taskId": "R62-T024",
+  "item": "src/algorithms/searching/binarySearchSteps.js",
+  "contract": {
+    "missSentinel": -1,
+    "duplicateIndexContract": "Returns any valid index k where array[k] === target"
+  },
+  "testCases": [
+    {
+      "id": "primary-target-2",
+      "inputArray": [2, 4, 6, 8],
+      "target": 2,
+      "expectedIndex": 0,
+      "terminalStepType": "found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "primary-target-8",
+      "inputArray": [2, 4, 6, 8],
+      "target": 8,
+      "expectedIndex": 3,
+      "terminalStepType": "found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "primary-target-5",
+      "inputArray": [2, 4, 6, 8],
+      "target": 5,
+      "expectedIndex": -1,
+      "terminalStepType": "not-found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "singleton-present",
+      "inputArray": [42],
+      "target": 42,
+      "expectedIndex": 0,
+      "terminalStepType": "found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "singleton-absent",
+      "inputArray": [42],
+      "target": 10,
+      "expectedIndex": -1,
+      "terminalStepType": "not-found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "empty-collection",
+      "inputArray": [],
+      "target": 5,
+      "expectedIndex": -1,
+      "terminalStepType": "not-found",
+      "invariantSatisfied": true
+    },
+    {
+      "id": "duplicate-indices",
+      "inputArray": [1, 2, 2, 2, 3],
+      "target": 2,
+      "expectedIndexAnyOf": [1, 2, 3],
+      "terminalStepType": "found",
+      "invariantSatisfied": true
+    }
+  ]
+}
