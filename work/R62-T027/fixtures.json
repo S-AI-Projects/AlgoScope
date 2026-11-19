@@ -1,0 +1,48 @@
+{
+  "taskId": "R62-T027",
+  "item": "src/algorithms/sorting/quickSortSteps.js",
+  "fixtures": [
+    {
+      "name": "unsorted-distinct",
+      "input": [3, 1, 2],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1],
+      "explanation": "Unsorted array with distinct elements. Pivot selects 2 (high index). 1 < 2 is swapped to front, 3 > 2 stays right, pivot placed at index 1."
+    },
+    {
+      "name": "duplicates",
+      "input": [2, 2, 1],
+      "expectedAscending": [1, 2, 2],
+      "expectedDescending": [2, 2, 1],
+      "explanation": "Array with duplicate values. Pivot selects 1. 1 is placed at index 0 after final swap, yielding correctly sorted [1, 2, 2]."
+    },
+    {
+      "name": "already-ordered",
+      "input": [1, 2, 3],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1],
+      "explanation": "Already sorted ascending array. Lomuto partition compares each element against pivot 3, placing pivot at end without swaps."
+    },
+    {
+      "name": "reversed",
+      "input": [3, 2, 1],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1],
+      "explanation": "Reversed array. Worst-case partition for Lomuto high-pivot, partitioning elements one by one into [1, 2, 3]."
+    },
+    {
+      "name": "singleton",
+      "input": [42],
+      "expectedAscending": [42],
+      "expectedDescending": [42],
+      "explanation": "Smallest non-trivial collection (single element). Base case low === high triggers immediately without partitioning."
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "expectedAscending": [],
+      "expectedDescending": [],
+      "explanation": "Smallest supported collection (empty collection). Handles boundary gracefully without recursion or errors."
+    }
+  ]
+}
