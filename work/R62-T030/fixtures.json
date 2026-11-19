@@ -1,0 +1,54 @@
+{
+  "taskId": "R62-T030",
+  "item": "src/algorithms/sorting/countingSortSteps.js",
+  "fixtures": [
+    {
+      "name": "unsorted-distinct",
+      "input": [3, 1, 2],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1]
+    },
+    {
+      "name": "duplicates",
+      "input": [2, 2, 1],
+      "expectedAscending": [1, 2, 2],
+      "expectedDescending": [2, 2, 1]
+    },
+    {
+      "name": "already-ordered",
+      "input": [1, 2, 3],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1]
+    },
+    {
+      "name": "reversed",
+      "input": [3, 2, 1],
+      "expectedAscending": [1, 2, 3],
+      "expectedDescending": [3, 2, 1]
+    },
+    {
+      "name": "singleton",
+      "input": [42],
+      "expectedAscending": [42],
+      "expectedDescending": [42]
+    },
+    {
+      "name": "empty",
+      "input": [],
+      "expectedAscending": [],
+      "expectedDescending": []
+    }
+  ],
+  "decisiveOperationMutants": [
+    {
+      "name": "off-by-one-placement-index",
+      "mutant": "output[count[arr[i]]] = arr[i]",
+      "rejected": true
+    },
+    {
+      "name": "omitted-counter-decrement",
+      "mutant": "omitted count[arr[i]]--",
+      "rejected": true
+    }
+  ]
+}
