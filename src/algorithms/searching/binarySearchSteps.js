@@ -194,10 +194,12 @@ export const binarySearchSources = {
   },
 }
 
+export const BINARY_SEARCH_MISS_SENTINEL = -1
+
 const createStep = ({
   lineKey,
   type,
-  array,
+  array = [],
   indices = [], // [mid, low, high]
   foundIndex = null,
   message = '',
@@ -207,10 +209,10 @@ const createStep = ({
   lineKey,
   type,
   array: [...array],
-  indices,
+  indices: [...indices],
   foundIndex,
   message,
-  variables,
+  variables: { ...variables },
   duration,
 })
 
@@ -228,6 +230,9 @@ export function resolveBinarySearchSortLine(language, lineKey) {
 }
 
 export function generateBinarySearchSteps(inputArray, target) {
+  if (!Array.isArray(inputArray)) {
+    throw new TypeError('inputArray must be an array')
+  }
   const arr = [...inputArray]
   const steps = []
   const n = arr.length
@@ -353,4 +358,115 @@ export function generateBinarySearchSteps(inputArray, target) {
   )
 
   return steps
+}
+
+/**
+ * Pure Binary Search implementation.
+ * Returns the index of target if found in the sorted array, or -1 (source miss sentinel).
+ *
+ * Duplicate-index contract:
+ * When target appears multiple times, returns an index k such that arr[k] === target.
+ *
+ * @param {Array<number>} inputArray - Sorted array of numbers.
+ * @param {number} target - Value to search for.
+ * @returns {number} The found index, or -1 (BINARY_SEARCH_MISS_SENTINEL).
+ */
+export function binarySearch(inputArray, target) {
+  if (!Array.isArray(inputArray)) {
+    throw new TypeError('inputArray must be an array')
+  }
+  if (typeof target !== 'number' || !Number.isFinite(target)) {
+    throw new TypeError('target must be a finite number')
+  }
+
+  let low = 0
+  let high = inputArray.length - 1
+
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2)
+    if (inputArray[mid] === target) {
+      return mid
+    } else if (inputArray[mid] < target) {
+      low = mid + 1
+    } else {
+      high = mid - 1
+    }
+  }
+
+  return BINARY_SEARCH_MISS_SENTINEL
+}
+
+/**
+ * Validates the core Binary Search invariant after each recorded animation step.
+ *
+ * Invariant properties checked:
+ * 1. Target absence outside search window:
+ *    - All elements arr[0...low-1] < target (or <= target in duplicates).
+ *    - All elements arr[high+1...n-1] > target (or >= target in duplicates).
+ * 2. Bounds validity:
+ *    - In active loop: 0 <= low <= high < n, or low > high upon termination.
+ * 3. Mid calculation:
+ *    - When mid is defined: mid === Math.floor((low + high) / 2).
+ *    - low <= mid <= high.
+ * 4. Step snapshot state:
+ *    - If type === 'found', arr[foundIndex] === target.
+ *    - If type === 'not-found', low > high and target is absent from arr.
+ *
+ * @param {Object} step - Recorded step snapshot.
+ * @param {Array<number>} originalArray - The input sorted array.
+ * @param {number} target - The search target.
+ * @returns {boolean} True if invariant holds.
+ */
+export function validateBinarySearchInvariant(step, originalArray, target) {
+  if (!step || typeof step !== 'object') return false
+  const { low, high, mid } = step.variables || {}
+  const n = originalArray.length
+
+  if (step.type === 'start') {
+    return Array.isArray(step.array) && step.array.length === n
+  }
+
+  if (low !== undefined && high !== undefined) {
+    // Left boundary invariant: elements before low cannot be greater than target
+    for (let i = 0; i < low && i < n; i++) {
+      if (originalArray[i] > target) {
+        return false
+      }
+    }
+    // Right boundary invariant: elements after high cannot be smaller than target
+    for (let i = Math.max(0, high + 1); i < n; i++) {
+      if (originalArray[i] < target) {
+        return false
+      }
+    }
+  }
+
+  if (step.type === 'mid' || step.type === 'compare' || step.type === 'found') {
+    if (mid !== undefined && low !== undefined && high !== undefined && low <= high) {
+      const expectedMid = Math.floor((low + high) / 2)
+      if (mid !== expectedMid) return false
+      if (mid < low || mid > high) return false
+    }
+  } else if (step.type === 'bounds-update') {
+    const { oldLow, oldHigh } = step.variables || {}
+    if (step.lineKey === 'low') {
+      if (low !== mid + 1) return false
+      if (oldLow !== undefined && Math.floor((oldLow + high) / 2) !== mid) return false
+    } else if (step.lineKey === 'high') {
+      if (high !== mid - 1) return false
+      if (oldHigh !== undefined && Math.floor((low + oldHigh) / 2) !== mid) return false
+    }
+  }
+
+  if (step.type === 'found') {
+    if (step.foundIndex === null || step.foundIndex === undefined) return false
+    if (originalArray[step.foundIndex] !== target) return false
+  }
+
+  if (step.type === 'not-found') {
+    if (low !== undefined && high !== undefined && low <= high) return false
+    if (originalArray.includes(target)) return false
+  }
+
+  return true
 }
