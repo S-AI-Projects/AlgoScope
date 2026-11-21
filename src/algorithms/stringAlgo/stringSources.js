@@ -1,3 +1,5 @@
+import { manacherSources } from './manacherSteps.js'
+
 export const stringSources = {
   kmp: {
     javascript: {
@@ -362,4 +364,6 @@ public class ZAlgorithm {
 }`,
     },
   },
+
+  manacher: manacherSources,
 }
