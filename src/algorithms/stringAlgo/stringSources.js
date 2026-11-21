@@ -1,3 +1,5 @@
+import { rabinKarpSources } from './rabinKarpSteps.js'
+
 export const stringSources = {
   kmp: {
     javascript: {
@@ -136,115 +138,7 @@ public class KMP {
     },
   },
 
-  rabinkarp: {
-    javascript: {
-      code: `function rabinKarp(text, pattern, prime = 101) {
-  const n = text.length, m = pattern.length
-  const BASE = 256
-  let patHash = 0, winHash = 0, h = 1
-  const matches = []
-
-  for (let i = 0; i < m - 1; i++) h = (h * BASE) % prime
-  for (let i = 0; i < m; i++) {
-    patHash = (BASE * patHash + pattern.charCodeAt(i)) % prime
-    winHash = (BASE * winHash + text.charCodeAt(i)) % prime
-  }
-  for (let i = 0; i <= n - m; i++) {
-    if (patHash === winHash) {
-      if (text.slice(i, i + m) === pattern) matches.push(i)
-    }
-    if (i < n - m) {
-      winHash = (BASE * (winHash - text.charCodeAt(i) * h) + text.charCodeAt(i + m)) % prime
-      if (winHash < 0) winHash += prime
-    }
-  }
-  return matches
-}
-
-console.log(rabinKarp('ABCCDABCDABDC', 'ABCD'))`,
-    },
-    python: {
-      code: `def rabin_karp(text, pattern, prime=101):
-    n, m, BASE = len(text), len(pattern), 256
-    pat_hash = win_hash = 0
-    h = pow(BASE, m - 1, prime)
-    matches = []
-
-    for i in range(m):
-        pat_hash = (BASE * pat_hash + ord(pattern[i])) % prime
-        win_hash = (BASE * win_hash + ord(text[i])) % prime
-
-    for i in range(n - m + 1):
-        if pat_hash == win_hash and text[i:i+m] == pattern:
-            matches.append(i)
-        if i < n - m:
-            win_hash = (BASE * (win_hash - ord(text[i]) * h) + ord(text[i + m])) % prime
-            if win_hash < 0:
-                win_hash += prime
-    return matches
-
-print(rabin_karp('ABCCDABCDABDC', 'ABCD'))`,
-    },
-    cpp: {
-      code: `#include <iostream>
-#include <vector>
-#include <string>
-using namespace std;
-
-vector<int> rabinKarp(const string& text, const string& pattern, int prime = 101) {
-    int n = text.size(), m = pattern.size(), BASE = 256;
-    long long patHash = 0, winHash = 0, h = 1;
-    vector<int> matches;
-    for (int i = 0; i < m - 1; i++) h = (h * BASE) % prime;
-    for (int i = 0; i < m; i++) {
-        patHash = (BASE * patHash + pattern[i]) % prime;
-        winHash = (BASE * winHash + text[i]) % prime;
-    }
-    for (int i = 0; i <= n - m; i++) {
-        if (patHash == winHash && text.substr(i, m) == pattern)
-            matches.push_back(i);
-        if (i < n - m) {
-            winHash = (BASE * (winHash - text[i] * h) + text[i + m]) % prime;
-            if (winHash < 0) winHash += prime;
-        }
-    }
-    return matches;
-}
-
-int main() {
-    for (int i : rabinKarp("ABCCDABCDABDC", "ABCD")) cout << i << " ";
-}`,
-    },
-    java: {
-      code: `import java.util.*;
-
-public class RabinKarp {
-    static List<Integer> rabinKarp(String text, String pattern, int prime) {
-        int n = text.length(), m = pattern.length(), BASE = 256;
-        long patHash = 0, winHash = 0, h = 1;
-        List<Integer> matches = new ArrayList<>();
-        for (int i = 0; i < m - 1; i++) h = (h * BASE) % prime;
-        for (int i = 0; i < m; i++) {
-            patHash = (BASE * patHash + pattern.charAt(i)) % prime;
-            winHash = (BASE * winHash + text.charAt(i)) % prime;
-        }
-        for (int i = 0; i <= n - m; i++) {
-            if (patHash == winHash && text.substring(i, i + m).equals(pattern))
-                matches.add(i);
-            if (i < n - m) {
-                winHash = (BASE * (winHash - text.charAt(i) * h) + text.charAt(i + m)) % prime;
-                if (winHash < 0) winHash += prime;
-            }
-        }
-        return matches;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(rabinKarp("ABCCDABCDABDC", "ABCD", 101));
-    }
-}`,
-    },
-  },
+  rabinkarp: rabinKarpSources,
 
   zalgorithm: {
     javascript: {
