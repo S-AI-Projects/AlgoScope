@@ -1,3 +1,5 @@
+import { boyerMooreSources } from './boyerMooreSteps.js'
+
 export const stringSources = {
   kmp: {
     javascript: {
@@ -362,4 +364,6 @@ public class ZAlgorithm {
 }`,
     },
   },
+
+  boyermoore: boyerMooreSources,
 }
