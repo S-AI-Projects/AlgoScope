@@ -1,3 +1,5 @@
+import { generateKnapsackSteps } from './knapsackSteps.js'
+
 // ─── LCS ────────────────────────────────────────────────────────────────────
 export function generateLCSSteps(a, b) {
   const m = a.length,
@@ -51,31 +53,7 @@ export function generateLCSSteps(a, b) {
 }
 
 // ─── 0/1 Knapsack ────────────────────────────────────────────────────────────
-export function generateKnapsackSteps(weights, values, capacity) {
-  const n = weights.length
-  const dp = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0))
-  const steps = []
-
-  for (let i = 1; i <= n; i++) {
-    for (let w = 0; w <= capacity; w++) {
-      const canInclude = weights[i - 1] <= w
-      const includeVal = canInclude
-        ? values[i - 1] + dp[i - 1][w - weights[i - 1]]
-        : -Infinity
-      const excludeVal = dp[i - 1][w]
-      dp[i][w] = Math.max(includeVal, excludeVal)
-      steps.push({
-        table: dp.map((r) => [...r]),
-        activeCell: [i, w],
-        decision: canInclude && includeVal > excludeVal ? 'include' : 'exclude',
-        itemIndex: i - 1,
-        phase: 'fill',
-      })
-    }
-  }
-
-  return { steps, dp, weights, values, capacity }
-}
+export { generateKnapsackSteps }
 
 // ─── Coin Change ─────────────────────────────────────────────────────────────
 export function generateCoinChangeSteps(coins, amount) {
