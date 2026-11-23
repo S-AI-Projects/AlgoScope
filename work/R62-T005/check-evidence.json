@@ -1,0 +1,285 @@
+{
+  "task": "R62-T005",
+  "generatedAt": "2026-11-23T04:39:43.384Z",
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "deterministicBehavior": {
+    "randomOperations": false,
+    "seedRequired": false,
+    "replayTiming": "synchronous pure trace; animation timing belongs to UI playback"
+  },
+  "checks": {
+    "focusedVitest": {
+      "command": "npm test -- src/algorithms/course/r62-t005.test.js",
+      "exitCode": 0,
+      "result": "4 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "built successfully (chunk size warning)"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  },
+  "cases": [
+    {
+      "name": "two-row sample",
+      "input": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3,
+        6,
+        5,
+        4
+      ],
+      "actual": [
+        1,
+        2,
+        3,
+        6,
+        5,
+        4
+      ],
+      "replayMatches": true,
+      "visitTrace": [
+        {
+          "row": 0,
+          "col": 0,
+          "direction": "right",
+          "value": 1
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "direction": "right",
+          "value": 2
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "direction": "right",
+          "value": 3
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "direction": "down",
+          "value": 6
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "direction": "left",
+          "value": 5
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "direction": "left",
+          "value": 4
+        }
+      ],
+      "finalState": {
+        "type": "complete",
+        "matrix": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ]
+        ],
+        "result": [
+          1,
+          2,
+          3,
+          6,
+          5,
+          4
+        ],
+        "row": null,
+        "col": null,
+        "direction": null,
+        "value": null
+      }
+    },
+    {
+      "name": "one row",
+      "input": [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "actual": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "replayMatches": true,
+      "visitTrace": [
+        {
+          "row": 0,
+          "col": 0,
+          "direction": "right",
+          "value": 1
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "direction": "right",
+          "value": 2
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "direction": "right",
+          "value": 3
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "direction": "right",
+          "value": 4
+        }
+      ],
+      "finalState": {
+        "type": "complete",
+        "matrix": [
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "result": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "row": null,
+        "col": null,
+        "direction": null,
+        "value": null
+      }
+    },
+    {
+      "name": "one column",
+      "input": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "actual": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "replayMatches": true,
+      "visitTrace": [
+        {
+          "row": 0,
+          "col": 0,
+          "direction": "right",
+          "value": 1
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "direction": "down",
+          "value": 2
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "direction": "down",
+          "value": 3
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "direction": "down",
+          "value": 4
+        }
+      ],
+      "finalState": {
+        "type": "complete",
+        "matrix": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ]
+        ],
+        "result": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "row": null,
+        "col": null,
+        "direction": null,
+        "value": null
+      }
+    }
+  ]
+}
