@@ -1,0 +1,171 @@
+{
+  "task": "R62-T031",
+  "branch": "student/e26b07f0660/R62-T031",
+  "checks": {
+    "focused_test": {
+      "argv": [
+        "npm",
+        "test",
+        "--",
+        "src/algorithms/course/r62-t031.test.js"
+      ],
+      "exit_code": 0,
+      "stdout": "\n> algoscope@1.13.0 test\n> vitest run src/algorithms/course/r62-t031.test.js\n\n\n RUN  v4.1.7 /Users/aryansingh/Documents/Codex/2026-11-23/chinmay-algoscope\n\n\n Test Files  1 passed (1)\n      Tests  5 passed (5)\n   Start at  18:50:51\n   Duration  129ms (transform 16ms, setup 0ms, import 24ms, tests 4ms, environment 0ms)\n\n",
+      "stderr": ""
+    },
+    "build": {
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "stdout": "\n> algoscope@1.13.0 build\n> vite build\n\nvite v7.1.11 building for production...\ntransforming...\n\u2713 4434 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                                    5.42 kB \u2502 gzip:   1.57 kB\ndist/assets/click-Cs55_HVK.wav                    58.02 kB\ndist/assets/logo2-C7ohc_eq.png                   123.48 kB\ndist/assets/index-Dv2THLdc.css                   189.28 kB \u2502 gzip:  25.85 kB\ndist/assets/DiskSchedulingPage-B6IFdugG.js         0.22 kB \u2502 gzip:   0.19 kB\ndist/assets/PageReplacementPage-DKQrXj-7.js        0.22 kB \u2502 gzip:   0.19 kB\ndist/assets/arrow-right-Bn5wi3Hn.js                0.34 kB \u2502 gzip:   0.26 kB\ndist/assets/clsx-B-dksMZM.js                       0.37 kB \u2502 gzip:   0.24 kB\ndist/assets/DifficultyBadge-K1O3T97y.js            0.51 kB \u2502 gzip:   0.37 kB\ndist/assets/utils-CKM-dwL_.js                      0.60 kB \u2502 gzip:   0.37 kB\ndist/assets/useKeyboardShortcuts-DVs6Ni7-.js       0.68 kB \u2502 gzip:   0.42 kB\ndist/assets/StatusDisplay-0piB3ujb.js              0.97 kB \u2502 gzip:   0.58 kB\ndist/assets/Favorites-CMa2ZJ4r.js                  1.23 kB \u2502 gzip:   0.62 kB\ndist/assets/useStepPlayback-DTZfGzbE.js            1.23 kB \u2502 gzip:   0.57 kB\ndist/assets/difficultyColors-C7fAmY8y.js           1.32 kB \u2502 gzip:   0.48 kB\ndist/assets/ComplexityGraph-CRozmOyI.js            1.33 kB \u2502 gzip:   0.77 kB\ndist/assets/LearningPathSuggestions--jeUdSu8.js    1.60 kB \u2502 gzip:   0.82 kB\ndist/assets/OperatingSystemsPage-D83b31mn.js       2.94 kB \u2502 gzip:   1.20 kB\ndist/assets/visualizerData-6wkY7lJs.js             5.30 kB \u2502 gzip:   1.83 kB\ndist/assets/ConceptsOverview-BK-fvHY3.js           5.39 kB \u2502 gzip:   2.03 kB\ndist/assets/AlgoCard-BQHte13Q.js                   5.68 kB \u2502 gzip:   2.25 kB\ndist/assets/PageNotFound-CEHMpGGw.js               7.24 kB \u2502 gzip:   2.40 kB\ndist/assets/VisualizerPage-DiVvz5B_.js             8.95 kB \u2502 gzip:   2.99 kB\ndist/assets/TestCaseManager-DrdjR58f.js            9.70 kB \u2502 gzip:   3.29 kB\ndist/assets/scheduleNetworkReady-CHqweZCA.js      10.43 kB \u2502 gzip:   3.59 kB\ndist/assets/VisualizerPage-Bp1jGrdL.js            10.91 kB \u2502 gzip:   3.29 kB\ndist/assets/About-DoLT69Us.js                     12.77 kB \u2502 gzip:   4.02 kB\ndist/assets/DPVisualizer-C880_lnJ.js              23.03 kB \u2502 gzip:   6.58 kB\ndist/assets/SlidingWindowVisualizer-DC8az4Fa.js   26.29 kB \u2502 gzip:   8.20 kB\ndist/assets/TwoPointerVisualizer-Dc4HRoOm.js      27.14 kB \u2502 gzip:   7.67 kB\ndist/assets/StackVisualizerPage-jPdiehTG.js       29.37 kB \u2502 gzip:   7.81 kB\ndist/assets/VisualizerPage-B6WIWWiC.js            31.12 kB \u2502 gzip:   9.52 kB\ndist/assets/DPOptimizationJourney-DcGZqcZD.js     31.52 kB \u2502 gzip:   9.08 kB\ndist/assets/CPUSchedulingPage-Drm5Rl19.js         33.05 kB \u2502 gzip:   8.02 kB\ndist/assets/VisualizerPage-DysQIq9D.js            34.64 kB \u2502 gzip:   8.99 kB\ndist/assets/Home-DVp-ODzy.js                      35.40 kB \u2502 gzip:  10.72 kB\ndist/assets/VisualizerPage-kxg29YhW.js            38.56 kB \u2502 gzip:   9.91 kB\ndist/assets/ChallengePage-BZ3mRs9d.js             57.18 kB \u2502 gzip:  15.76 kB\ndist/assets/VisualizerPage-BBvUlPdo.js            60.32 kB \u2502 gzip:  15.08 kB\ndist/assets/PracticePage-Df1nMsfV.js              60.71 kB \u2502 gzip:  16.52 kB\ndist/assets/VisualizerPage-Dxfc4B8A.js            62.74 kB \u2502 gzip:  15.74 kB\ndist/assets/MathSoloVisualizer-CaUVuAzI.js        64.91 kB \u2502 gzip:  16.42 kB\ndist/assets/VisualizerPage-BY4NPxys.js            87.55 kB \u2502 gzip:  19.37 kB\ndist/assets/ComplexityCard-BStO81Sr.js           100.79 kB \u2502 gzip:  34.97 kB\ndist/assets/ShortestPathPage-Cb1aYi5x.js         101.39 kB \u2502 gzip:  26.42 kB\ndist/assets/CodePanel-59kw7aNp.js                150.12 kB \u2502 gzip:  19.90 kB\ndist/assets/DSLayout-9ji6_C1B.js                 200.93 kB \u2502 gzip:  50.78 kB\ndist/assets/LineChart-BG9wlEfe.js                356.30 kB \u2502 gzip: 106.46 kB\ndist/assets/index-DShys93t.js                    587.30 kB \u2502 gzip: 179.96 kB\ndist/assets/vsc-dark-plus-B-iRgz29.js            639.28 kB \u2502 gzip: 230.95 kB\ndist/assets/vis-network-CZusj8r5.js              659.02 kB \u2502 gzip: 156.60 kB\n\u2713 built in 6.05s\n",
+      "stderr": "\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
+    },
+    "lint": {
+      "argv": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "stdout": "\n> algoscope@1.13.0 lint\n> eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0\n\n",
+      "stderr": ""
+    },
+    "actual_trace": {
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-e",
+        "import { generateLinearSearchSteps as g } from './src/algorithms/searching/linearSearchSteps.js'; const cases=[{array:[2,4,6,8],target:2},{array:[2,4,6,8],target:8},{array:[2,4,6,8],target:5},{array:[2,4,2,8],target:2},{array:[7],target:7},{array:[],target:7}]; console.log(JSON.stringify(cases.map(input=>({input,types:g(input.array,input.target).map(s=>s.type),terminal:g(input.array,input.target).at(-1)}))));"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"input\":{\"array\":[2,4,6,8],\"target\":2},\"types\":[\"start\",\"loop\",\"compare\",\"found\"],\"terminal\":{\"lineKey\":\"found\",\"type\":\"found\",\"array\":[2,4,6,8],\"indices\":[0],\"foundIndex\":0,\"message\":\"Target found at index 0!\",\"variables\":{\"i\":0,\"target\":2},\"duration\":1000}},{\"input\":{\"array\":[2,4,6,8],\"target\":8},\"types\":[\"start\",\"loop\",\"compare\",\"loop\",\"compare\",\"loop\",\"compare\",\"loop\",\"compare\",\"found\"],\"terminal\":{\"lineKey\":\"found\",\"type\":\"found\",\"array\":[2,4,6,8],\"indices\":[3],\"foundIndex\":3,\"message\":\"Target found at index 3!\",\"variables\":{\"i\":3,\"target\":8},\"duration\":1000}},{\"input\":{\"array\":[2,4,6,8],\"target\":5},\"types\":[\"start\",\"loop\",\"compare\",\"loop\",\"compare\",\"loop\",\"compare\",\"loop\",\"compare\",\"not-found\"],\"terminal\":{\"lineKey\":\"notFound\",\"type\":\"not-found\",\"array\":[2,4,6,8],\"indices\":[],\"foundIndex\":null,\"message\":\"Target 5 not found in the array. Returning -1.\",\"variables\":{\"target\":5},\"duration\":900}},{\"input\":{\"array\":[2,4,2,8],\"target\":2},\"types\":[\"start\",\"loop\",\"compare\",\"found\"],\"terminal\":{\"lineKey\":\"found\",\"type\":\"found\",\"array\":[2,4,2,8],\"indices\":[0],\"foundIndex\":0,\"message\":\"Target found at index 0!\",\"variables\":{\"i\":0,\"target\":2},\"duration\":1000}},{\"input\":{\"array\":[7],\"target\":7},\"types\":[\"start\",\"loop\",\"compare\",\"found\"],\"terminal\":{\"lineKey\":\"found\",\"type\":\"found\",\"array\":[7],\"indices\":[0],\"foundIndex\":0,\"message\":\"Target found at index 0!\",\"variables\":{\"i\":0,\"target\":7},\"duration\":1000}},{\"input\":{\"array\":[],\"target\":7},\"types\":[\"start\",\"not-found\"],\"terminal\":{\"lineKey\":\"notFound\",\"type\":\"not-found\",\"array\":[],\"indices\":[],\"foundIndex\":null,\"message\":\"Target 7 not found in the array. Returning -1.\",\"variables\":{\"target\":7},\"duration\":900}}]\n",
+      "stderr": ""
+    },
+    "inputs_expected_actual": [
+      {
+        "input": {
+          "array": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "target": 2
+        },
+        "expected": {
+          "type": "found",
+          "foundIndex": 0,
+          "comparisons": 1
+        },
+        "actual": {
+          "terminal_type": "found",
+          "foundIndex": 0,
+          "comparisons": 1
+        }
+      },
+      {
+        "input": {
+          "array": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "target": 8
+        },
+        "expected": {
+          "type": "found",
+          "foundIndex": 3,
+          "comparisons": 4
+        },
+        "actual": {
+          "terminal_type": "found",
+          "foundIndex": 3,
+          "comparisons": 4
+        }
+      },
+      {
+        "input": {
+          "array": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "target": 5
+        },
+        "expected": {
+          "type": "not-found",
+          "source_sentinel": "-1",
+          "comparisons": 4
+        },
+        "actual": {
+          "terminal_type": "not-found",
+          "message": "Target 5 not found in the array. Returning -1.",
+          "comparisons": 4
+        }
+      },
+      {
+        "input": {
+          "array": [
+            2,
+            4,
+            2,
+            8
+          ],
+          "target": 2
+        },
+        "expected": {
+          "type": "found",
+          "first_index": 0,
+          "comparisons": 1
+        },
+        "actual": {
+          "terminal_type": "found",
+          "foundIndex": 0,
+          "comparisons": 1
+        }
+      },
+      {
+        "input": {
+          "array": [
+            7
+          ],
+          "target": 7
+        },
+        "expected": {
+          "type": "found",
+          "foundIndex": 0
+        },
+        "actual": {
+          "terminal_type": "found",
+          "foundIndex": 0
+        }
+      },
+      {
+        "input": {
+          "array": [],
+          "target": 7
+        },
+        "expected": {
+          "type": "not-found",
+          "source_sentinel": "-1",
+          "comparisons": 0
+        },
+        "actual": {
+          "terminal_type": "not-found",
+          "message": "Target 7 not found in the array. Returning -1.",
+          "comparisons": 0
+        }
+      }
+    ],
+    "versions": {
+      "node": "v24.22.1",
+      "npm": "11.19.1",
+      "vitest": "vitest/4.1.7 darwin-arm64 node-v24.22.1"
+    }
+  }
+}
