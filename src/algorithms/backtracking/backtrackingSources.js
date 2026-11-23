@@ -31,7 +31,9 @@ export const backtrackingSources = {
 
   solve(0)
   return results
-}`,
+}
+
+// Displayed example: solveNQueens(4) returns the two valid 4-Queens boards.`,
     },
     python: {
       code: `def solve_n_queens(n):

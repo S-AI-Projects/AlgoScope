@@ -1,0 +1,115 @@
+{
+  "task": "R62-T007",
+  "entry": "nqueens",
+  "language": "javascript",
+  "sourceLabel": "backtrackingSources.nqueens.javascript.code",
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "checks": {
+    "focusedVitest": {
+      "command": "npm test -- src/algorithms/course/r62-t007.test.js",
+      "exitCode": 0,
+      "result": "3 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "built successfully (chunk size warning)"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  },
+  "cases": [
+    {
+      "name": "displayed 4-Queens example",
+      "input": 4,
+      "expected": [
+        [
+          ".Q..",
+          "...Q",
+          "Q...",
+          "..Q."
+        ],
+        [
+          "..Q.",
+          "Q...",
+          "...Q",
+          ".Q.."
+        ]
+      ],
+      "actual": [
+        [
+          ".Q..",
+          "...Q",
+          "Q...",
+          "..Q."
+        ],
+        [
+          "..Q.",
+          "Q...",
+          "...Q",
+          ".Q.."
+        ]
+      ]
+    },
+    {
+      "name": "independent one-queen input",
+      "input": 1,
+      "expected": [
+        [
+          "Q"
+        ]
+      ],
+      "actual": [
+        [
+          "Q"
+        ]
+      ]
+    }
+  ],
+  "displayedLineChecks": [
+    {
+      "line": 1,
+      "expectedOperation": "function solveNQueens(n)",
+      "actual": "function solveNQueens(n) {",
+      "passed": true
+    },
+    {
+      "line": 5,
+      "expectedOperation": "function isSafe(row, col)",
+      "actual": "  function isSafe(row, col) {",
+      "passed": true
+    },
+    {
+      "line": 17,
+      "expectedOperation": "results.push(board.map",
+      "actual": "      results.push(board.map(r => r.join('')))",
+      "passed": true
+    },
+    {
+      "line": 22,
+      "expectedOperation": "board[row][col] = 'Q'",
+      "actual": "        board[row][col] = 'Q'",
+      "passed": true
+    },
+    {
+      "line": 23,
+      "expectedOperation": "solve(row + 1)",
+      "actual": "solve(row + 1)",
+      "passed": true
+    },
+    {
+      "line": 24,
+      "expectedOperation": "board[row][col] = '.'",
+      "actual": "        board[row][col] = '.'  // backtrack",
+      "passed": true
+    }
+  ]
+}
