@@ -1,0 +1,24 @@
+{
+  "task": "R62-T035",
+  "student": "Chinmay Jangid",
+  "branch": "student/e26b07f0660/R62-T035",
+  "input": { "disk_count": 3, "rods": ["A", "B", "C"] },
+  "expected": {
+    "repeat_runs_identical": true,
+    "move_count": 7,
+    "all_moves_legal": true,
+    "final_rods": { "A": [], "B": [], "C": [3, 2, 1] }
+  },
+  "actual": {
+    "repeat_runs_identical": true,
+    "move_count": 7,
+    "all_moves_legal": true,
+    "final_rods": { "A": [], "B": [], "C": [3, 2, 1] }
+  },
+  "commands": [
+    { "command": "npm test -- src/algorithms/course/r62-t035.test.js", "exit_code": 0, "result": "1 file, 2 tests passed" },
+    { "command": "npm run build", "exit_code": 0, "result": "production build passed; existing >500 kB chunk warning" },
+    { "command": "npm run lint", "exit_code": 0, "result": "passed with zero warnings" }
+  ],
+  "tool_versions": { "node": "v24.22.1", "npm": "11.19.1", "vitest": "4.1.7", "vite": "7.1.11" }
+}

@@ -1,68 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import StatusDisplay from '../StatusDisplay'
 import { calculateStepDelay } from '../../lib/utils'
+import { generateHanoiFrames } from '../../algorithms/course/tower-of-hanoi.js'
 
 const RODS = ['A', 'B', 'C']
-
-function generateHanoiFrames(diskCount) {
-  const rods = {
-    A: Array.from({ length: diskCount }, (_, index) => diskCount - index),
-    B: [],
-    C: [],
-  }
-  const frames = []
-  let moveNumber = 0
-
-  function snapshot(type, message, active = {}) {
-    frames.push({
-      rods: {
-        A: [...rods.A],
-        B: [...rods.B],
-        C: [...rods.C],
-      },
-      type,
-      message,
-      moveNumber,
-      ...active,
-    })
-  }
-
-  function moveDisk(from, to) {
-    const disk = rods[from].pop()
-    rods[to].push(disk)
-    moveNumber += 1
-    snapshot('move', `Move disk ${disk} from rod ${from} to rod ${to}.`, {
-      from,
-      to,
-      disk,
-    })
-  }
-
-  function solve(n, source, auxiliary, destination, depth = 1) {
-    snapshot(
-      'call',
-      n === 1
-        ? `Base case: move disk 1 from ${source} to ${destination}.`
-        : `Move ${n - 1} disk${n - 1 === 1 ? '' : 's'} from ${source} to ${auxiliary} first.`,
-      { source, auxiliary, destination, depth, activeN: n }
-    )
-
-    if (n === 1) {
-      moveDisk(source, destination)
-      return
-    }
-
-    solve(n - 1, source, destination, auxiliary, depth + 1)
-    moveDisk(source, destination)
-    solve(n - 1, auxiliary, source, destination, depth + 1)
-  }
-
-  snapshot('start', `Starting Tower of Hanoi with ${diskCount} disks.`)
-  solve(diskCount, 'A', 'B', 'C')
-  snapshot('complete', `Complete in ${moveNumber} moves.`)
-
-  return frames
-}
 
 export const CanvasTowerOfHanoi = ({
   diskCount = 4,
