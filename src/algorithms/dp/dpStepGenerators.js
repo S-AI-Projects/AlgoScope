@@ -1,5 +1,9 @@
 // ─── LCS ────────────────────────────────────────────────────────────────────
 export function generateLCSSteps(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    throw new TypeError('LCS inputs must be strings.')
+  }
+
   const m = a.length,
     n = b.length
   const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0))

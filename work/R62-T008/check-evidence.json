@@ -1,0 +1,67 @@
+{
+  "task": "R62-T008",
+  "function": "generateLCSSteps",
+  "sourceReferences": {
+    "defaultExample": "src/components/dynamicProgramming/DPVisualizer.jsx:16",
+    "callerTrimsStrings": "src/components/dynamicProgramming/DPVisualizer.jsx:779",
+    "generatorRejectsNonStrings": "src/algorithms/dp/dpStepGenerators.js:3-4",
+    "generatorUsesStringLengths": "src/algorithms/dp/dpStepGenerators.js:7-9"
+  },
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "checks": {
+    "focusedTest": {
+      "command": "npm test -- src/algorithms/course/r62-t008.test.js",
+      "exitCode": 0,
+      "result": "3 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "passed; existing chunk size warning"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  },
+  "cases": [
+    {
+      "name": "smallest valid input",
+      "input": ["", ""],
+      "expected": { "strA": "", "strB": "", "dp": [[0]], "steps": [] },
+      "actual": { "strA": "", "strB": "", "dp": [[0]], "steps": [] }
+    },
+    {
+      "name": "DP visualizer default example",
+      "input": ["ABCBDAB", "BDCAB"],
+      "independentExpected": {
+        "lcs": "BDAB",
+        "length": 4,
+        "tableDimensions": [8, 6],
+        "fillSteps": 35,
+        "tracebackPath": [[7, 5], [6, 4], [5, 2], [4, 1]]
+      },
+      "actual": {
+        "lcsLengthAtDp75": 4,
+        "tableDimensions": [8, 6],
+        "fillSteps": 35,
+        "tracebackPath": [[7, 5], [6, 4], [5, 2], [4, 1]]
+      }
+    },
+    {
+      "name": "unsupported input followed by valid input",
+      "unsupportedInput": [null, "A"],
+      "expectedError": "TypeError: LCS inputs must be strings.",
+      "actualError": "TypeError: LCS inputs must be strings.",
+      "subsequentValidInput": ["A", "A"],
+      "expectedValidResult": { "dp": [[0, 0], [0, 1]], "stepCount": 2 },
+      "actualValidResult": { "dp": [[0, 0], [0, 1]], "stepCount": 2 }
+    }
+  ]
+}
