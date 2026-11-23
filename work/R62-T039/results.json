@@ -1,0 +1,22 @@
+{
+  "task": "R62-T039",
+  "student": "Chinmay Jangid",
+  "branch": "student/e26b07f0660/R62-T039",
+  "sample": {
+    "input": [2, 0, 1, 2, 0],
+    "expected": [0, 0, 1, 2, 2],
+    "actual": [0, 0, 1, 2, 2]
+  },
+  "operation_counts": [
+    { "size": 5, "steps": 5, "comparisons": 8, "swaps": 2 },
+    { "size": 8, "steps": 8, "comparisons": 13, "swaps": 4 },
+    { "size": 12, "steps": 12, "comparisons": 20, "swaps": 6 }
+  ],
+  "unsupported_input": { "input": [2, 0, 3, 1], "actual": "RangeError: Dutch national flag input must contain only 0, 1, and 2" },
+  "commands": [
+    { "command": "npm test -- src/algorithms/course/r62-t039.test.js", "exit_code": 0, "result": "1 file, 2 tests passed" },
+    { "command": "npm run build", "exit_code": 0, "result": "production build passed; existing >500 kB chunk warning" },
+    { "command": "npm run lint", "exit_code": 0, "result": "passed with zero warnings" }
+  ],
+  "tool_versions": { "node": "v24.22.1", "npm": "11.19.1", "vitest": "4.1.7", "vite": "7.1.11" }
+}
