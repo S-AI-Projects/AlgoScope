@@ -1,4 +1,6 @@
 export const searchingSources = {
+  // Linear search returns the first matching zero-based index, or -1 if absent.
+  // This comment documents the displayed snippet without changing the collection shape.
   linearSearch: {
     javascript: {
       code: `function linearSearch(arr, target) {
