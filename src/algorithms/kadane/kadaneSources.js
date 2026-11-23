@@ -14,7 +14,8 @@ export const kadaneSources = {
 }
 
 const arr = [-2,1,-3,4,-1,2,1,-5,4];
-console.log(kadane(arr));`,
+console.log(kadane(arr));
+// Example output: 6`,
     },
 
     python: {
