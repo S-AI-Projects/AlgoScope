@@ -1,0 +1,161 @@
+{
+  "task": "R62-T032",
+  "branch": "student/e26b07f0660/R62-T032",
+  "checks": {
+    "focused_vitest": "passed (2 tests)",
+    "build": "passed",
+    "lint": "passed"
+  },
+  "tool_versions": {
+    "node": "v24.22.1",
+    "npm": "11.19.1",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v24.22.1"
+  },
+  "inputs_expected_actual": [
+    {
+      "input": [
+        {
+          "id": "A",
+          "profit": 1,
+          "deadline": 1
+        }
+      ],
+      "expected": {
+        "sorted": [
+          "A"
+        ],
+        "scheduled": [
+          [
+            "A",
+            1
+          ]
+        ],
+        "missed": [],
+        "totalProfit": 1,
+        "scheduledCount": 1,
+        "missedCount": 0
+      },
+      "actual": {
+        "input": [
+          {
+            "id": "A",
+            "profit": 1,
+            "deadline": 1
+          }
+        ],
+        "sorted": [
+          "A"
+        ],
+        "scheduled": [
+          [
+            "A",
+            1
+          ]
+        ],
+        "missed": [],
+        "timeline": [
+          "A"
+        ],
+        "summary": {
+          "totalProfit": 1,
+          "scheduledCount": 1,
+          "missedCount": 0,
+          "completed": true
+        }
+      }
+    },
+    {
+      "input": [
+        {
+          "id": "A",
+          "profit": 5,
+          "deadline": 2
+        },
+        {
+          "id": "B",
+          "profit": 5,
+          "deadline": 1
+        },
+        {
+          "id": "C",
+          "profit": 4,
+          "deadline": 2
+        }
+      ],
+      "expected": {
+        "sorted": [
+          "B",
+          "A",
+          "C"
+        ],
+        "scheduled": [
+          [
+            "B",
+            1
+          ],
+          [
+            "A",
+            2
+          ]
+        ],
+        "missed": [
+          "C"
+        ],
+        "timeline": [
+          "B",
+          "A"
+        ],
+        "totalProfit": 10,
+        "scheduledCount": 2,
+        "missedCount": 1
+      },
+      "actual": {
+        "input": [
+          {
+            "id": "A",
+            "profit": 5,
+            "deadline": 2
+          },
+          {
+            "id": "B",
+            "profit": 5,
+            "deadline": 1
+          },
+          {
+            "id": "C",
+            "profit": 4,
+            "deadline": 2
+          }
+        ],
+        "sorted": [
+          "B",
+          "A",
+          "C"
+        ],
+        "scheduled": [
+          [
+            "B",
+            1
+          ],
+          [
+            "A",
+            2
+          ]
+        ],
+        "missed": [
+          "C"
+        ],
+        "timeline": [
+          "B",
+          "A"
+        ],
+        "summary": {
+          "totalProfit": 10,
+          "scheduledCount": 2,
+          "missedCount": 1,
+          "completed": true
+        }
+      }
+    }
+  ]
+}
