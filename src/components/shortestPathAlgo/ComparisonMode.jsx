@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { complexityMap } from '../../data/complexityMap'
+import { generateFloydWarshallSteps } from '../../algorithms/course/floyd-warshall.js'
 
 // Weighted directed graph used for all three algorithms
 const NODES = [1, 2, 3, 4, 5, 6]
@@ -131,55 +132,7 @@ function runBellmanFord(source) {
 
 // Run Floyd-Warshall (all pairs) and return steps
 function runFloydWarshall() {
-  // Build matrix
-  const size = NODES.length
-  const idx = (v) => v - 1
-  const dist = Array.from({ length: size }, (_, i) =>
-    Array.from({ length: size }, (_, j) => (i === j ? 0 : INF))
-  )
-
-  for (const { from, to, weight } of EDGES) {
-    dist[idx(from)][idx(to)] = weight
-  }
-
-  const steps = [
-    {
-      dist: dist.map((r) => [...r]),
-      k: null,
-      phase: 'Initialize distance matrix',
-    },
-  ]
-
-  for (let k = 0; k < size; k++) {
-    const updated = []
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        if (
-          dist[i][k] !== INF &&
-          dist[k][j] !== INF &&
-          dist[i][k] + dist[k][j] < dist[i][j]
-        ) {
-          dist[i][j] = dist[i][k] + dist[k][j]
-          updated.push([i + 1, j + 1])
-        }
-      }
-    }
-    steps.push({
-      dist: dist.map((r) => [...r]),
-      k: k + 1,
-      updated,
-      phase: `Intermediate node k=${k + 1}: ${updated.length} paths improved`,
-    })
-  }
-
-  steps.push({
-    dist: dist.map((r) => [...r]),
-    k: null,
-    updated: [],
-    phase: 'All-pairs shortest paths complete',
-    done: true,
-  })
-  return steps
+  return generateFloydWarshallSteps(NODES, EDGES)
 }
 
 const ALGO_META = {
