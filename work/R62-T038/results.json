@@ -1,0 +1,18 @@
+{
+  "task": "R62-T038",
+  "student": "Chinmay Jangid",
+  "branch": "student/e26b07f0660/R62-T038",
+  "selected_entry": "shortestPathSources.dijkstra.network.javascript",
+  "execution": "The selected displayed JavaScript source string was executed in isolated child Node processes with a deterministic PriorityQueue test harness.",
+  "cases": [
+    { "kind": "example fixture", "input": "A→B4,A→C1,C→B2,C→D5,B→D1", "expected": { "A": 0, "B": 3, "C": 1, "D": 4 }, "actual": { "A": 0, "C": 1, "B": 3, "D": 4 } },
+    { "kind": "independent fixture", "input": "A→B2,B→C3,A→C9", "expected": { "A": 0, "B": 2, "C": 5 }, "actual": { "A": 0, "B": 2, "C": 5 } },
+    { "kind": "unsupported input", "input": "A→B-1", "expected": "RangeError: Dijkstra requires non-negative edge weights", "actual": "RangeError: Dijkstra requires non-negative edge weights" }
+  ],
+  "commands": [
+    { "command": "npm test -- src/algorithms/course/r62-t038.test.js", "exit_code": 0, "result": "1 file, 2 tests passed" },
+    { "command": "npm run build", "exit_code": 0, "result": "production build passed" },
+    { "command": "npm run lint", "exit_code": 0, "result": "passed with zero warnings" }
+  ],
+  "tool_versions": { "node": "v24.22.1", "npm": "11.19.1", "vitest": "4.1.7", "vite": "7.1.11" }
+}

@@ -3,6 +3,11 @@ export const shortestPathSources = {
     network: {
       javascript: {
         code: `function dijkstra(graph, start) {
+  for (const edges of Object.values(graph)) {
+    for (const weight of Object.values(edges)) {
+      if (weight < 0) throw new RangeError('Dijkstra requires non-negative edge weights');
+    }
+  }
   const dists = {};
   const pq = new PriorityQueue((a, b) => a.d < b.d);
   dists[start] = 0;
