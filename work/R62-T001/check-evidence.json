@@ -1,0 +1,62 @@
+{
+  "task": "R62-T001",
+  "generatedAt": "2026-11-23T04:45:20.996Z",
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "checks": {
+    "focusedVitest": {
+      "command": "npm test -- src/algorithms/course/r62-t001.test.js",
+      "exitCode": 0,
+      "result": "3 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "built successfully (chunk size warning)"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  },
+  "cases": [
+    {
+      "name": "target found",
+      "input": [
+        1,
+        3,
+        5,
+        7,
+        9
+      ],
+      "target": 7,
+      "expected": 3,
+      "actual": 3
+    },
+    {
+      "name": "target missing",
+      "input": [
+        1,
+        3,
+        5,
+        7,
+        9
+      ],
+      "target": 4,
+      "expected": -1,
+      "actual": -1
+    },
+    {
+      "name": "empty input",
+      "input": [],
+      "target": 7,
+      "expected": -1,
+      "actual": -1
+    }
+  ]
+}
