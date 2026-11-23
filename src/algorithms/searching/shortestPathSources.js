@@ -944,6 +944,7 @@ func primMST(V int, adj [][]Edge) []int {
     }
     return false;
   };
+  // Stable sorting keeps input order for edges with equal weights.
   const sortedEdges = [...edges].sort((a, b) => a.w - b.w);
   const mst = [];
   for (const edge of sortedEdges) {
@@ -952,6 +953,7 @@ func primMST(V int, adj [][]Edge) []int {
       if (mst.length === V - 1) break;
     }
   }
+  // For disconnected graphs, mst is the minimum spanning forest.
   return mst;
 }`,
       },

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import StatusDisplay from '../StatusDisplay'
 import { GraphBuilderToolbar } from '../shared/GraphBuilderToolbar'
 import { scheduleNetworkReady } from '../../lib/scheduleNetworkReady'
+import { kruskalMinimumSpanningForest } from '../../algorithms/course/kruskal-s-mst-with-union-find'
 
 // ── Preset graph data (also used by Reset button in toolbar) ──────────────────
 const PRESET_NODES = [
@@ -588,29 +589,6 @@ export const CanvasShortestPath = ({
 
     const runKruskal = () => {
       setStatus(`Running Kruskal's MST algorithm...`)
-      const parentDSU = {}
-      nodeIds.forEach((id) => {
-        parentDSU[id] = id
-      })
-
-      const find = (i) => {
-        while (parentDSU[i] !== i) {
-          parentDSU[i] = parentDSU[parentDSU[i]]
-          i = parentDSU[i]
-        }
-        return i
-      }
-
-      const union = (i, j) => {
-        const rootI = find(i)
-        const rootJ = find(j)
-        if (rootI !== rootJ) {
-          parentDSU[rootI] = rootJ
-          return true
-        }
-        return false
-      }
-
       const allEdges = edges
         .get()
         .map((e) => {
@@ -620,44 +598,33 @@ export const CanvasShortestPath = ({
         })
         .filter((e) => Number.isFinite(e.weight))
 
-      allEdges.sort((a, b) => a.weight - b.weight)
-
-      const mstEdges = []
-      const mstNodes = new Set()
+      const forest = kruskalMinimumSpanningForest(nodeIds, allEdges)
+      const forestEdges = forest.edges.map((edge) => edge.id)
+      const forestNodes = new Set(
+        forest.edges.flatMap((edge) => [edge.from, edge.to])
+      )
       let delay = 0
 
-      allEdges.forEach((e) => {
-        const u = e.from
-        const v = e.to
+      forest.steps.forEach((step) => {
+        if (!step.accepted) return
 
-        if (find(u) !== find(v)) {
-          union(u, v)
-          mstEdges.push(e.id)
-          mstNodes.add(u)
-          mstNodes.add(v)
-
-          const currentEdgeId = e.id
-          const nodeU = u
-          const nodeV = v
-
-          visitLaterNode(nodeU, delay)
-          visitLaterNode(nodeV, delay)
-          delay += 400 / speed
-          visitLaterEdge(currentEdgeId, delay)
-          delay += 800 / speed
-        }
+        visitLaterNode(step.edge.from, delay)
+        visitLaterNode(step.edge.to, delay)
+        delay += 400 / speed
+        visitLaterEdge(step.edge.id, delay)
+        delay += 800 / speed
       })
 
       const t = setTimeout(
         () => {
-          mstNodes.forEach((nodeId) => {
+          forestNodes.forEach((nodeId) => {
             nodes.update({
               id: nodeId,
               color: { background: '#10b981', border: '#ffffff' },
               size: 28,
             })
           })
-          mstEdges.forEach((edgeId) => {
+          forestEdges.forEach((edgeId) => {
             edges.update({
               id: edgeId,
               color: { color: '#10b981' },
@@ -665,17 +632,9 @@ export const CanvasShortestPath = ({
             })
           })
           setStatus(
-            `Minimum Spanning Tree found using Kruskal's algorithm. Total weight: ${mstEdges.reduce(
-              (acc, edgeId) => {
-                const e = edges.get(edgeId)
-                const w =
-                  typeof e.weight === 'number'
-                    ? e.weight
-                    : parseFloat(e.label ?? '1')
-                return acc + (Number.isFinite(w) ? w : 0)
-              },
-              0
-            )}.`
+            forest.connected
+              ? `Minimum Spanning Tree found using Kruskal's algorithm. Total weight: ${forest.cost}.`
+              : `Minimum Spanning Forest found using Kruskal's algorithm. Total weight: ${forest.cost}; components: ${forest.components}.`
           )
         },
         delay + 500 / speed
