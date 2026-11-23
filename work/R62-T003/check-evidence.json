@@ -1,0 +1,53 @@
+{
+  "task": "R62-T003",
+  "function": "generateZSteps",
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "checks": {
+    "focusedTest": {
+      "command": "npm test -- src/algorithms/course/r62-t003.test.js",
+      "exitCode": 0,
+      "result": "2 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "passed; existing chunk size warning"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    "browserSmoke": {
+      "url": "http://127.0.0.1:5173/string-algorithms?algo=zalgorithm",
+      "input": { "text": "aaaa", "pattern": "aa" },
+      "displayedMatches": 3,
+      "displayedPositions": [0, 1, 2],
+      "displayedTextZArray": [2, 2, 2, 1],
+      "result": "passed; initial and result screenshots captured in task session"
+    }
+  },
+  "cases": [
+    {
+      "input": { "text": "aaaa", "pattern": "aa" },
+      "expectedMatches": [0, 1, 2],
+      "actualMatches": [0, 1, 2],
+      "independentReferenceMatches": [0, 1, 2],
+      "expectedFinalTextZArray": [2, 2, 2, 1],
+      "actualFinalTextZArray": [2, 2, 2, 1]
+    },
+    {
+      "input": { "text": "$a$a$", "pattern": "$a" },
+      "expectedMatches": [0, 2],
+      "actualMatches": [0, 2],
+      "independentReferenceMatches": [0, 2],
+      "expectedFinalTextZArray": [2, 0, 2, 0, 1],
+      "actualFinalTextZArray": [2, 0, 2, 0, 1]
+    }
+  ]
+}

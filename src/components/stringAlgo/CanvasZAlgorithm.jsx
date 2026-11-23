@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import StatusDisplay from '../StatusDisplay'
+import { generateZSteps } from '../../algorithms/stringAlgo/zAlgorithm'
 
 export const CanvasZAlgorithm = ({ text, pattern, speed }) => {
   const [zArray, setZArray] = useState([])
@@ -19,29 +20,9 @@ export const CanvasZAlgorithm = ({ text, pattern, speed }) => {
       return
     }
 
-    const s = pattern + '$' + text
-    const n = s.length
-    const z = new Array(n).fill(0)
-    z[0] = n
-    let l = 0,
-      r = 0
-
-    const steps = [{ i: 0, z: [...z], l, r }]
-    for (let i = 1; i < n; i++) {
-      if (i < r) z[i] = Math.min(r - i, z[i - l])
-      while (i + z[i] < n && s[z[i]] === s[i + z[i]]) z[i]++
-      if (i + z[i] > r) {
-        l = i
-        r = i + z[i]
-      }
-      steps.push({ i, z: [...z], l, r })
-    }
-
     const m = pattern.length
-    const foundMatches = steps[steps.length - 1].z
-      .slice(m + 1)
-      .map((val, i) => (val === m ? i : -1))
-      .filter((i) => i !== -1)
+    const { steps, matches: foundMatches } = generateZSteps(text, pattern)
+    const n = text.length + m + 1
     setMatches(foundMatches)
 
     let idx = 0
@@ -57,7 +38,7 @@ export const CanvasZAlgorithm = ({ text, pattern, speed }) => {
         step.i === 0
           ? `Z[0] = ${n} (full string length, always)`
           : step.i <= m
-            ? `Computing LPS prefix zone: position ${step.i} in pattern+'$'`
+            ? `Computing LPS prefix zone: position ${step.i} in pattern + separator`
             : `Z[${textI}] = ${step.z[step.i]} — longest prefix match starting at text[${textI}]`
       )
       idx++

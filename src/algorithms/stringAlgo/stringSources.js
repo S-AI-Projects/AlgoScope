@@ -262,7 +262,8 @@ public class RabinKarp {
 }
 
 function zSearch(text, pattern) {
-  const s = pattern + '$' + text
+  const separator = Symbol('z-algorithm-separator')
+  const s = [...pattern.split(''), separator, ...text.split('')]
   const z = zAlgorithm(s)
   const m = pattern.length
   return z.slice(m + 1).reduce((acc, val, i) => {
