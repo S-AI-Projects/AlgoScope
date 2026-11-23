@@ -260,8 +260,16 @@ console.log(a | b);   // OR   = 47
 console.log(a ^ b);   // XOR  = 37
 console.log(~a & 0xFF); // NOT = 213
 console.log(a << 1);  // LSHIFT = 84
-console.log(a >> 1);  // RSHIFT = 21`,
-    lineMap: { start: 1, bitOp: 4, result: 9 },
+console.log(a >> 1);  // RSHIFT = 21
+
+function popcount8(value) {
+  let count = 0
+  while (value !== 0) { value &= value - 1; count++ }
+  return count
+}
+console.log(popcount8(12)); // 2 (00001100)
+console.log(popcount8(0));  // 0`,
+    lineMap: { start: 1, bitOp: 4, result: 9, popcount: 13, popcountResult: 16 },
   },
   python: {
     code: `a = 0b00101010  # 42
@@ -272,8 +280,18 @@ print(a | b)        # OR     = 47
 print(a ^ b)        # XOR    = 37
 print(~a & 0xFF)    # NOT    = 213
 print(a << 1)       # LSHIFT = 84
-print(a >> 1)       # RSHIFT = 21`,
-    lineMap: { start: 1, bitOp: 4, result: 9 },
+print(a >> 1)       # RSHIFT = 21
+
+def popcount8(value):
+    count = 0
+    while value != 0:
+        value &= value - 1
+        count += 1
+    return count
+
+print(popcount8(12))  # 2 (00001100)
+print(popcount8(0))   # 0`,
+    lineMap: { start: 1, bitOp: 4, result: 9, popcount: 14, popcountResult: 18 },
   },
   cpp: {
     code: `#include <iostream>
@@ -289,8 +307,15 @@ int main() {
     cout << (~a & 0xFF)    << "\\n"; // NOT    = 213
     cout << (a << 1)       << "\\n"; // LSHIFT = 84
     cout << (a >> 1)       << "\\n"; // RSHIFT = 21
+    auto popcount8 = [](unsigned value) {
+        unsigned count = 0;
+        while (value != 0) { value &= value - 1; count++; }
+        return count;
+    };
+    cout << popcount8(12) << "\\n"; // 2 (00001100)
+    cout << popcount8(0) << "\\n";  // 0
 }`,
-    lineMap: { start: 4, bitOp: 8, result: 13 },
+    lineMap: { start: 4, bitOp: 8, result: 13, popcount: 16, popcountResult: 19 },
   },
   java: {
     code: `public class BitOps {
@@ -304,12 +329,25 @@ int main() {
         System.out.println(~a & 0xFF);   // NOT    = 213
         System.out.println(a << 1);      // LSHIFT = 84
         System.out.println(a >> 1);      // RSHIFT = 21
+        java.util.function.IntUnaryOperator popcount8 = value -> {
+            int remaining = value, count = 0;
+            while (remaining != 0) { remaining &= remaining - 1; count++; }
+            return count;
+        };
+        System.out.println(popcount8.applyAsInt(12)); // 2 (00001100)
+        System.out.println(popcount8.applyAsInt(0));  // 0
     }
 }`,
-    lineMap: { start: 2, bitOp: 6, result: 11 },
+    lineMap: { start: 2, bitOp: 6, result: 11, popcount: 14, popcountResult: 17 },
   },
   c: {
     code: `#include <stdio.h>
+
+unsigned int popcount8(unsigned int value) {
+    unsigned int count = 0;
+    while (value != 0) { value &= value - 1; count++; }
+    return count;
+}
 
 int main() {
     int a = 42; // 0b00101010
@@ -321,11 +359,22 @@ int main() {
     printf("%d\\n", ~a & 0xFF);   // NOT    = 213
     printf("%d\\n", a << 1);      // LSHIFT = 84
     printf("%d\\n", a >> 1);      // RSHIFT = 21
+    printf("%u\\n", popcount8(12)); // 2 (00001100)
+    printf("%u\\n", popcount8(0));  // 0
 }`,
-    lineMap: { start: 3, bitOp: 7, result: 12 },
+    lineMap: { start: 9, bitOp: 13, result: 18, popcount: 5, popcountResult: 19 },
   },
   rust: {
-    code: `fn main() {
+    code: `fn popcount8(mut value: u8) -> u32 {
+    let mut count = 0;
+    while value != 0 {
+        value &= value - 1;
+        count += 1;
+    }
+    count
+}
+
+fn main() {
     let a: u8 = 0b00101010; // 42
     let b: u8 = 0b00001111; // 15
 
@@ -335,13 +384,24 @@ int main() {
     println!("{}", !a);           // NOT    = 213
     println!("{}", a << 1);       // LSHIFT = 84
     println!("{}", a >> 1);       // RSHIFT = 21
+    println!("{}", popcount8(12)); // 2 (00001100)
+    println!("{}", popcount8(0));  // 0
 }`,
-    lineMap: { start: 1, bitOp: 5, result: 10 },
+    lineMap: { start: 10, bitOp: 14, result: 19, popcount: 4, popcountResult: 20 },
   },
   go: {
     code: `package main
 
 import "fmt"
+
+func popcount8(value uint8) int {
+    count := 0
+    for value != 0 {
+        value &= value - 1
+        count++
+    }
+    return count
+}
 
 func main() {
     a := 42 // 0b00101010
@@ -353,8 +413,10 @@ func main() {
     fmt.Println(^a & 0xFF)   // NOT    = 213
     fmt.Println(a << 1)      // LSHIFT = 84
     fmt.Println(a >> 1)      // RSHIFT = 21
+    fmt.Println(popcount8(12)) // 2 (00001100)
+    fmt.Println(popcount8(0))  // 0
 }`,
-    lineMap: { start: 5, bitOp: 9, result: 14 },
+    lineMap: { start: 14, bitOp: 18, result: 23, popcount: 8, popcountResult: 24 },
   },
 }
 

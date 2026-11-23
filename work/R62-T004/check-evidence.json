@@ -1,0 +1,73 @@
+{
+  "task": "R62-T004",
+  "policy": {
+    "widthBits": 8,
+    "unsigned": true,
+    "minimum": 0,
+    "maximum": 255,
+    "source": "src/algorithms/mathTheory/bitManipulation.js"
+  },
+  "tools": {
+    "node": "v26.13.1",
+    "npm": "11.20.0",
+    "vitest": "vitest/4.1.7 darwin-arm64 node-v26.13.1",
+    "vite": "vite/7.1.11 darwin-arm64 node-v26.13.1"
+  },
+  "checks": {
+    "focusedTest": {
+      "command": "npm test -- src/algorithms/course/r62-t004.test.js",
+      "exitCode": 0,
+      "result": "4 tests passed"
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "passed; existing chunk size warning"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    "browserSmoke": {
+      "url": "http://127.0.0.1:5173/math-theory?algo=bits",
+      "operation": "POPCOUNT",
+      "input12": { "expected": 2, "displayed": 2 },
+      "input0": { "expected": 0, "displayed": 0 },
+      "result": "passed; initial and completed-run screenshots captured in task session"
+    }
+  },
+  "cases": [
+    {
+      "input": 12,
+      "binary8Bit": "00001100",
+      "expectedPopulationCount": 2,
+      "actualPopulationCount": 2,
+      "expectedTraceArrays": [
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0]
+      ],
+      "actualTraceArrays": [
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0]
+      ],
+      "invariantAfterEachStep": "count + referencePopulationCount(remaining) === referencePopulationCount(input)"
+    },
+    {
+      "input": 0,
+      "expectedPopulationCount": 0,
+      "actualPopulationCount": 0,
+      "traceTypes": ["start", "complete"],
+      "finalRemaining": 0
+    },
+    {
+      "invalidInputs": [-1, 256, 1.5],
+      "expected": "RangeError",
+      "actual": "RangeError for each input"
+    }
+  ]
+}

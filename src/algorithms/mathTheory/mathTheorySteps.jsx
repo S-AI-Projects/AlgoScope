@@ -1,4 +1,10 @@
 import { createStep, formatComplex } from '../../lib/utils'
+import {
+  BIT_MAX,
+  BIT_WIDTH,
+  countSetBits,
+  toBits8,
+} from './bitManipulation'
 
 // ─────────────────────────────────────────────
 // EUCLIDEAN GCD  (Euclidean modulo vs naive subtraction)
@@ -261,7 +267,7 @@ export function generateBitOpSteps(a, b, operation) {
 
   const toBits = (n) => {
     const bits = []
-    for (let i = 7; i >= 0; i--) bits.push((n >> i) & 1)
+    for (let i = BIT_WIDTH - 1; i >= 0; i--) bits.push((n >> i) & 1)
     return bits
   }
 
@@ -284,11 +290,11 @@ export function generateBitOpSteps(a, b, operation) {
       opLabel = 'XOR'
       break
     case 'NOT':
-      result = ~a & 0xff
+      result = ~a & BIT_MAX
       opLabel = 'NOT'
       break
     case 'LSHIFT':
-      result = (a << 1) & 0xff
+      result = (a << 1) & BIT_MAX
       opLabel = 'LEFT SHIFT'
       break
     case 'RSHIFT':
@@ -352,6 +358,73 @@ export function generateBitOpSteps(a, b, operation) {
       array: bitsResult,
       message: `Result: ${result} (${bitsResult.join('')})`,
       variables: { result },
+      duration: 900,
+    })
+  )
+
+  return steps
+}
+
+export function generatePopulationCountSteps(value) {
+  const expectedCount = countSetBits(value)
+  const steps = []
+  let remaining = value
+  let count = 0
+
+  steps.push(
+    createStep({
+      lineKey: 'start',
+      type: 'start',
+      array: toBits8(remaining),
+      message: `Count set bits in ${value} using ${BIT_WIDTH}-bit unsigned values.`,
+      variables: {
+        input: value,
+        remaining,
+        count,
+        invariant: expectedCount,
+      },
+      duration: 700,
+    })
+  )
+
+  while (remaining !== 0) {
+    const lowestSetBit = remaining & -remaining
+    const bitIndex = 31 - Math.clz32(lowestSetBit)
+    remaining &= remaining - 1
+    count++
+
+    steps.push(
+      createStep({
+        lineKey: 'popcount',
+        type: 'compare',
+        array: toBits8(remaining),
+        indices: [BIT_WIDTH - 1 - bitIndex],
+        message: `Remove set bit ${bitIndex}; count = ${count}, remaining = ${remaining}.`,
+        variables: {
+          input: value,
+          remaining,
+          count,
+          bitIndex,
+          invariant: expectedCount,
+        },
+        duration: 600,
+      })
+    )
+  }
+
+  steps.push(
+    createStep({
+      lineKey: 'popcountResult',
+      type: 'complete',
+      array: toBits8(count),
+      message: `Population count: ${count}`,
+      variables: {
+        input: value,
+        remaining,
+        count,
+        result: count,
+        invariant: expectedCount,
+      },
       duration: 900,
     })
   )

@@ -15,6 +15,7 @@ import {
   generateEuclideanGCDSteps,
   generateFastExpoSteps,
   generateBitOpSteps,
+  generatePopulationCountSteps,
   generateSieveSteps,
   generateFibonacciSteps,
   generateFFTSteps,
@@ -34,6 +35,7 @@ import {
   resolveFibonacciLine,
   resolveFFTLine,
 } from '../../algorithms/mathTheory/mathTheorySources'
+import { BIT_MAX, BIT_WIDTH } from '../../algorithms/mathTheory/bitManipulation'
 
 const ALGO_TABS = [
   { key: 'gcd', label: 'Euclidean GCD', complexityKey: 'gcd' },
@@ -140,6 +142,10 @@ export const MathSoloVisualizer = () => {
     } else if (algo === 'fft') {
       const signal = generateSignal(fftN, fftType)
       loadSteps(generateFFTSteps(signal), { autoPlay: !isStepMode })
+    } else if (bitOp === 'POPCOUNT') {
+      loadSteps(generatePopulationCountSteps(Number(bitA)), {
+        autoPlay: !isStepMode,
+      })
     } else {
       loadSteps(generateBitOpSteps(Number(bitA), Number(bitB), bitOp), {
         autoPlay: !isStepMode,
@@ -294,7 +300,7 @@ export const MathSoloVisualizer = () => {
               Inputs
             </p>
             <Tooltip
-              content="First operand (0–255)"
+              content={`First operand (unsigned ${BIT_WIDTH}-bit integer, 0–${BIT_MAX})`}
               position="right"
               className="w-full"
             >
@@ -305,17 +311,23 @@ export const MathSoloVisualizer = () => {
                 <input
                   type="number"
                   min={0}
-                  max={255}
+                  max={BIT_MAX}
+                  step={1}
                   value={bitA}
                   onChange={(e) =>
-                    setBitA(Math.min(255, Math.max(0, e.target.value)))
+                    setBitA(
+                      Math.min(
+                        BIT_MAX,
+                        Math.max(0, Math.trunc(Number(e.target.value) || 0))
+                      )
+                    )
                   }
                   className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-white outline-none focus:border-cyan-500 text-sm"
                 />
               </div>
             </Tooltip>
             <Tooltip
-              content="Second operand (not used for NOT, shifts)"
+              content="Second operand (not used for NOT, shifts, or POPCOUNT)"
               position="right"
               className="w-full"
             >
@@ -326,10 +338,16 @@ export const MathSoloVisualizer = () => {
                 <input
                   type="number"
                   min={0}
-                  max={255}
+                  max={BIT_MAX}
+                  step={1}
                   value={bitB}
                   onChange={(e) =>
-                    setBitB(Math.min(255, Math.max(0, e.target.value)))
+                    setBitB(
+                      Math.min(
+                        BIT_MAX,
+                        Math.max(0, Math.trunc(Number(e.target.value) || 0))
+                      )
+                    )
                   }
                   className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-white outline-none focus:border-cyan-500 text-sm"
                 />
@@ -344,7 +362,15 @@ export const MathSoloVisualizer = () => {
                 onChange={(e) => setBitOp(e.target.value)}
                 className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2.5 text-white outline-none focus:border-cyan-500 text-sm"
               >
-                {['AND', 'OR', 'XOR', 'NOT', 'LSHIFT', 'RSHIFT'].map((op) => (
+                {[
+                  'AND',
+                  'OR',
+                  'XOR',
+                  'NOT',
+                  'LSHIFT',
+                  'RSHIFT',
+                  'POPCOUNT',
+                ].map((op) => (
                   <option key={op} value={op}>
                     {op}
                   </option>

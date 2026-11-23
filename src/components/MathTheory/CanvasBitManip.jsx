@@ -1,9 +1,14 @@
 import React from 'react'
 import StatusDisplay from '../StatusDisplay'
+import {
+  BIT_MAX,
+  BIT_WIDTH,
+  countSetBits,
+} from '../../algorithms/mathTheory/bitManipulation'
 
 const toBits = (n) => {
   const bits = []
-  for (let i = 7; i >= 0; i--) bits.push((n >> i) & 1)
+  for (let i = BIT_WIDTH - 1; i >= 0; i--) bits.push((n >> i) & 1)
   return bits
 }
 
@@ -40,7 +45,10 @@ const BitRow = ({
       })}
     </div>
     <span className={`text-sm font-mono ${color} ml-2`}>
-      = {bits.reduce((acc, b, i) => acc + b * Math.pow(2, 7 - i), 0)}
+      = {bits.reduce(
+        (acc, b, i) => acc + b * Math.pow(2, BIT_WIDTH - 1 - i),
+        0
+      )}
     </span>
   </div>
 )
@@ -67,11 +75,13 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
       case 'XOR':
         return toBits(a ^ b)
       case 'NOT':
-        return toBits(~a & 0xff)
+        return toBits(~a & BIT_MAX)
       case 'LSHIFT':
-        return toBits((a << 1) & 0xff)
+        return toBits((a << 1) & BIT_MAX)
       case 'RSHIFT':
         return toBits(a >> 1)
+      case 'POPCOUNT':
+        return toBits(countSetBits(a))
       default:
         return toBits(a & b)
     }
@@ -92,11 +102,13 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
       case 'XOR':
         return a ^ b
       case 'NOT':
-        return ~a & 0xff
+        return ~a & BIT_MAX
       case 'LSHIFT':
-        return (a << 1) & 0xff
+        return (a << 1) & BIT_MAX
       case 'RSHIFT':
         return a >> 1
+      case 'POPCOUNT':
+        return countSetBits(a)
       default:
         return a & b
     }
@@ -109,6 +121,7 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
     NOT: '~',
     LSHIFT: '<<',
     RSHIFT: '>>',
+    POPCOUNT: 'count set bits',
   }
 
   return (
@@ -118,12 +131,12 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
         <div className="flex items-center gap-3">
           <span className="w-8" />
           <div className="flex gap-1.5">
-            {Array.from({ length: 8 }, (_, i) => (
+            {Array.from({ length: BIT_WIDTH }, (_, i) => (
               <div
                 key={i}
                 className="w-10 text-center text-[10px] text-slate-600 font-mono"
               >
-                {7 - i}
+                {BIT_WIDTH - 1 - i}
               </div>
             ))}
           </div>
@@ -141,7 +154,8 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
 
         {operation !== 'NOT' &&
           operation !== 'LSHIFT' &&
-          operation !== 'RSHIFT' && (
+          operation !== 'RSHIFT' &&
+          operation !== 'POPCOUNT' && (
             <BitRow
               bits={bitsB}
               label="B"
@@ -181,7 +195,8 @@ export const CanvasBitManip = ({ currentStep, inputA, inputB, operation }) => {
           </div>
           {operation !== 'NOT' &&
           operation !== 'LSHIFT' &&
-          operation !== 'RSHIFT' ? (
+          operation !== 'RSHIFT' &&
+          operation !== 'POPCOUNT' ? (
             <div className="rounded-xl bg-slate-800/60 p-4 border border-slate-700">
               <p className="text-slate-400 text-xs">B</p>
               <h2 className="text-2xl font-bold text-purple-400 mt-1 font-mono">
